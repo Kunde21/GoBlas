@@ -44,20 +44,19 @@
 
 // func gemm_kernel_2x2(m, n, k int, alpha float64, a,b,c []float64, ldc int)
 TEXT ·gemm_kernel_2x2(SB), NOSPLIT, $0
-	MOVQ K_PAR, K
+	MOVQ  K_PAR, K
 	MOVDDUP_(ALPHA_PAR, ALPHA)
-	MOVQ A_PAR, A
-	MOVQ B_PAR, B
-	MOVQ C_PAR, C
-	MOVQ LDC_PAR, LDC
+	MOVQ  A_PAR, A
+	MOVQ  B_PAR, B
+	MOVQ  C_PAR, C
+	MOVQ  LDC_PAR, LDC
 	IMULQ $SIZE, LDC
-	MOVQ K, KSZ
+	MOVQ  K, KSZ
 	IMULQ $SIZE, KSZ
-
 
 	MOVQ M, J
 	SARQ $1, J    // M / 2
-	JZ   d1_setup    	// if M / 2 <= 1
+	JZ   d1_setup // if M / 2 <= 1
 
 d2:
 	MOVQ C, CO1
@@ -65,7 +64,7 @@ d2:
 	MOVQ B, BO1
 
 	MOVQ N, I
-	SARQ $1, I    // N / 2
+	SARQ $1, I     // N / 2
 	JZ   d21_setup
 
 d22:
@@ -105,12 +104,12 @@ d22_2x2_store:
 
 	KERNEL_2X2_SAVE
 
-	DECQ I 
-	JG d22
+	DECQ I
+	JG   d22
 
 d21_setup:
 	MOVQ N, I
-	ANDQ $1, I    // N % 2
+	ANDQ $1, I  // N % 2
 	JZ   d2_end
 
 d21:
@@ -125,7 +124,7 @@ d21_1x2:
 	KERNEL_1X2
 
 	DECQ KCT
-	JG d21_1x2
+	JG   d21_1x2
 
 d21_1x2_save:
 
@@ -134,25 +133,25 @@ d21_1x2_save:
 d2_end:
 
 	LEAQ (A)(KSZ*2), A
-	LEAQ (C)(LDC*2), C 
+	LEAQ (C)(LDC*2), C
 
-	DECQ J 
-	JG d2
+	DECQ J
+	JG   d2
 
 d1_setup:
 
-	MOVQ M, J 
-	ANDQ $1, J 
-	JZ end
-	
+	MOVQ M, J
+	ANDQ $1, J
+	JZ   end
+
 d1:
 
 	MOVQ C, CO1
 	MOVQ B, BO1
 
-	MOVQ N, I 
-	SARQ $1, I 
-	JZ d11_setup 
+	MOVQ N, I
+	SARQ $1, I
+	JZ   d11_setup
 
 d12:
 
@@ -167,20 +166,20 @@ d12_2x1:
 	KERNEL_2X1
 
 	DECQ KCT
-	JG d12_2x1
+	JG   d12_2x1
 
 d12_2x1_save:
 
 	KERNEL_2X1_SAVE
 
-	DECQ I 
-	JG d12 
+	DECQ I
+	JG   d12
 
 d11_setup:
 
 	MOVQ N, I
-	ANDQ $1, I 
-	JZ end
+	ANDQ $1, I
+	JZ   end
 
 d11:
 	MOVQ A, AO1
@@ -190,11 +189,11 @@ d11:
 	MOVQ K, KCT
 
 d11_1x1:
-	
+
 	KERNEL_1X1
 
 	DECQ KCT
-	JG d11_1x1
+	JG   d11_1x1
 
 d11_1x1_save:
 
