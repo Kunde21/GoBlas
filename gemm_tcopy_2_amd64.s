@@ -4,7 +4,7 @@
 // license that can be found in the LICENSE file.
 //
 // The origianal code comes from OpenBLAS library,
-// which can be found at www.openblas.net 
+// which can be found at www.openblas.net
 // and is distributed under the following terms:
 //
 // *******************************************************************

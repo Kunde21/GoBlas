@@ -2,15 +2,16 @@ package main
 
 import (
 	"fmt"
+	"math"
 	"math/rand"
-	"runtime"
 	"sync"
 	"testing"
 	"time"
 
+	"github.com/Kunde21/internal/asm/f64"
+	"github.com/Kunde21/numgo"
 	"github.com/gonum/blas"
 	"github.com/gonum/blas/native"
-	"github.com/gonum/matrix/mat64"
 )
 
 func TestMM(t *testing.T) {
@@ -32,171 +33,83 @@ func TestMM(t *testing.T) {
 
 func testmm(tnum, m, n, k int) func(t *testing.T) {
 	return func(t *testing.T) {
-		// t.Parallel()
-		// m,n,k := m,n,k
 		A, B := make([]float64, m*k), make([]float64, k*n)
 		A1, B1 := make([]float64, m*k), make([]float64, k*n)
-		A2, B2 := make([]float64, m*k), make([]float64, k*n)
 
 		r := rand.New(rand.NewSource(time.Now().UnixNano()))
 
 		for i := range A {
-			A[i] = r.Float64()
+			A[i] = r.Float64() // float64(i + 1) //
 		}
 		for i := range B {
-			B[i] = r.Float64()
+			B[i] = -r.Float64() // -float64(i + 1) //
 		}
 
 		C := make([]float64, m*n)
+		C1 := make([]float64, m*n)
 
-		w := new(sync.WaitGroup)
-		w.Add(2)
-		go func() {
-			gemmNcopy_2(k, m, A, k, A1)
-			// fmt.Println(m,n,k,A,A2)
-			dgemm_ncopy_2(k, m, A, k, A2)
-			for i := range A1 {
-				if A1[i] != A2[i] {
-					t.Errorf("A Copy mismatch %v:\nBase:%v\nGo: %v\nAsm: %v\n\n", tnum, A, A1, A2)
-					break
-				}
-			}
-			runtime.GC()
-			w.Done()
-		}()
+		dgemm_ncopy_2(k, m, A, k, A1)
+		dgemm_tcopy_2(n, k, B, n, B1)
+		f64.ScalUnitary(2, C)
 
-		go func() {
-			gemmTcopy_2(k, n, B, n, B1)
-			dgemm_tcopy_2(n, k, B, n, B2)
-			for i := range B1 {
-				if B1[i] != B2[i] {
-					t.Errorf("B Copy mismatch %v:\nBase:%v\nGo: %v\nAsm: %v\n\n", tnum, B, B1, B2)
-					break
-				}
-			}
-			runtime.GC()
-			w.Done()
-		}()
+		gemmKernel_2x2(n, m, k, 2, B1, A1, C, n)
+		var imp native.Implementation
+		imp.Dgemm(blas.NoTrans, blas.NoTrans, m, n, k, 2, A, k, B, n, 2, C1, n)
 
-		w.Wait()
-		gemmKernel_2x2(n, m, k, 1, B2, A2, C, n)
-		// fmt.Println("Both N copy:", C)
-
-		Am := mat64.NewDense(m, k, A)
-		Bm := mat64.NewDense(k, n, B)
-		Cm := mat64.NewDense(m, n, nil)
-		Cm.Mul(Am, Bm)
-
-		Cdat := Cm.RawMatrix().Data
-		for i, v := range Cdat {
+		for i, v := range C1 {
 			if v != C[i] {
-				t.Errorf("Result mismatch %v:\nGoNum: %v\nAsm: %v\n\n", tnum, Cdat, C)
+				t.Errorf("Result mismatch %v:\nGoNum: %v\nAsm: %v\n\n", tnum, C, C1)
+				break
+			}
+			C[i] = 0
+		}
+
+		dgemm_full(m, n, k, 2, A, k, B, n, 2, C, n)
+		for i, v := range C1 {
+			if math.Abs(v-C[i]) > 1e-10 {
+				t.Errorf("Result mismatch %v:\nGoNum:\n%v\nGN_Asm:\n%v\n\n", tnum, numgo.NewArray64(C1, m, n), numgo.NewArray64(C, m, n))
+				break
 			}
 		}
-		// fmt.Println(Cdat)
-		// fmt.Println(C)
 	}
 }
 
-var m, n, k = 1024, 1024, 256
-
-func BenchmarkMat64(t *testing.B) {
-	A, B := make([]float64, m*k), make([]float64, k*n)
-	for i := range A {
-		A[i] = float64(i + 1)
-	}
-	for i := range B {
-		B[i] = -float64(i + 1)
-	}
-	t.ResetTimer()
-	t.ReportAllocs()
-	for i := 0; i < t.N; i++ {
-		Am := mat64.NewDense(m, k, A)
-		Bm := mat64.NewDense(k, n, B)
-		Cm := mat64.NewDense(m, n, nil)
-		Cm.Mul(Am, Bm)
-	}
-}
-
-func BenchmarkPGoBlas(t *testing.B) {
-	A, B := make([]float64, m*k), make([]float64, k*n)
-	C := make([]float64, m*n)
-	for i := range A {
-		A[i] = float64(i + 1)
-	}
-	for i := range B {
-		B[i] = -float64(i + 1)
-	}
+func dgemm_full(m, n, k int, Alpha float64,
+	A []float64, lda int, B []float64, ldb int, Beta float64, C []float64, ldc int) {
 	A1, B1 := make([]float64, m*k), make([]float64, k*n)
-	w := new(sync.WaitGroup)
-	w.Add(1)
+	wg := new(sync.WaitGroup)
+
+	wg.Add(1)
 	go func() {
 		dgemm_ncopy_2(k, m, A, k, A1)
-		w.Done()
+		f64.ScalUnitary(Beta, C)
+		wg.Done()
 	}()
 	dgemm_tcopy_2(n, k, B, n, B1)
-	w.Wait()
+	wg.Wait()
 
-	t.ResetTimer()
-	t.ReportAllocs()
-	for i := 0; i < t.N; i++ {
-		gemmKernel_2x2(n, m, k, 1, B1, A1, C, n)
-	}
+	ParallelDGemm(m, n, k, Alpha, A1, B1, C, ldc)
 }
 
-func BenchmarkGoBlas(t *testing.B) {
-	A, B := make([]float64, m*k), make([]float64, k*n)
-	C := make([]float64, m*n)
-	for i := range A {
-		A[i] = float64(i + 1)
-	}
-	for i := range B {
-		B[i] = -float64(i + 1)
-	}
-	A1, B1 := make([]float64, m*k), make([]float64, k*n)
-	dgemm_ncopy_2(k, m, A, k, A1)
-	dgemm_tcopy_2(n, k, B, n, B1)
+func ParallelDGemm(m, n, k int, Alpha float64, A, B, C []float64, ldc int) {
+	wrk := make(chan int)
+	wg := new(sync.WaitGroup)
 
-	t.ResetTimer()
-	t.ReportAllocs()
-	for i := 0; i < t.N; i++ {
-		gemmKernel_2x2(n, m, k, 1, B1, A1, C, n)
+	wg.Add(NumCPU)
+	for j := 0; j < NumCPU; j++ {
+		go func(win <-chan int) {
+			for w := range win {
+				gemm_kernel_2x2(2, n, k, Alpha, A[w*2*k:], B, C[w*2*n:], n)
+			}
+			wg.Done()
+		}(wrk)
 	}
-}
-
-func BenchmarkNCpy(t *testing.B) {
-	A := make([]float64, m*k)
-	t.ResetTimer()
-	t.ReportAllocs()
-	for i := 0; i < t.N; i++ {
-		A1 := make([]float64, m*k)
-		dgemm_ncopy_2(k, m, A, k, A1)
+	for j := 0; j < m>>1; j++ {
+		wrk <- j
 	}
-}
-
-func BenchmarkTCpy(t *testing.B) {
-	B := make([]float64, k*n)
-	t.ResetTimer()
-	t.ReportAllocs()
-	for i := 0; i < t.N; i++ {
-		B1 := make([]float64, k*n)
-		dgemm_tcopy_2(n, k, B, n, B1)
+	if m&1 > 0 {
+		gemm_kernel_2x2(1, n, k, Alpha, A[(m-1)*k:], B, C[(m-1)*n:], n)
 	}
-}
-
-func BenchmarkGonumBlas(t *testing.B) {
-	A, B := make([]float64, m*k), make([]float64, k*n)
-	C := make([]float64, m*n)
-	for i := range A {
-		A[i] = float64(i + 1)
-	}
-	for i := range B {
-		B[i] = -float64(i + 1)
-	}
-	var imp native.Implementation
-	t.ResetTimer()
-	t.ReportAllocs()
-	for i := 0; i < t.N; i++ {
-		imp.Dgemm(blas.NoTrans, blas.NoTrans, m, n, k, 2, A, m, B, k, 2, C, m)
-	}
+	close(wrk)
+	wg.Wait()
 }
