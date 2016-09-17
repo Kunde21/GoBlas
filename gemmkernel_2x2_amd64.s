@@ -44,7 +44,17 @@
 
 // func gemm_kernel_2x2(m, n, k int, alpha float64, a,b,c []float64, ldc int)
 TEXT ·gemm_kernel_2x2(SB), NOSPLIT, $0
+	CMPQ M, $0
+	JE   end
+
+	CMPQ N, $0
+	JE   end
+
 	MOVQ  K_PAR, K
+
+	CMPQ K, $0
+	JE   end
+
 	MOVDDUP_(ALPHA_PAR, ALPHA)
 	MOVQ  A_PAR, A
 	MOVQ  B_PAR, B
@@ -53,6 +63,8 @@ TEXT ·gemm_kernel_2x2(SB), NOSPLIT, $0
 	IMULQ $SIZE, LDC
 	MOVQ  K, KSZ
 	IMULQ $SIZE, KSZ
+
+	MOVQ $0, ret+112(FP)
 
 	MOVQ M, J
 	SARQ $1, J    // M / 2
