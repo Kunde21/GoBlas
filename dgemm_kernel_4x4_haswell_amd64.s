@@ -101,8 +101,8 @@ USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #define L_BUFFER_SIZE 512*8*12+4096
 
-#define Ndiv12	 24(BX)
-#define Nmod12	 32(BX)
+#define Mdiv12	 24(BX)
+#define Mmod12	 32(BX)
 #define M	 m+0(FP)
 #define ALPHA	 48(BX)
 #define BUFFER1	128(BX)
@@ -135,7 +135,7 @@ TEXT ·gemm_kernel_4x4(SB), 0, $54272-120
 	MOVQ  C_base+80(FP), C
 	MOVQ  ldc+104(FP), LDC
 
-	MOVQ SP, BX
+	LEAQ base-0(SP), BX
 	SUBQ $128 + L_BUFFER_SIZE, BX
 	MOVQ BX, AX
 	ANDQ $-4096, BX               // align stack
@@ -152,10 +152,10 @@ TEXT ·gemm_kernel_4x4(SB), 0, $54272-120
 	XORQ DX, DX
 	MOVQ $12, DI
 	DIVQ DI         // M / 12
-	MOVQ AX, Ndiv12 // M / 12
-	MOVQ DX, Nmod12 // M % 12
+	MOVQ AX, Mdiv12 // M / 12
+	MOVQ DX, Mmod12 // M % 12
 
-	MOVQ Ndiv12, J
+	MOVQ Mdiv12, J
 	CMPQ J, $ 0
 	JE   L4_0
 
@@ -232,11 +232,11 @@ L12_10:
 	LEAQ (C)(LDC*8), C
 	LEAQ (C)(LDC*4), C // c += 12 * ldc
 
-	MOVQ B, BO          // aoffset = a
+	MOVQ B, BO          // boffset = B
 	ADDQ $16 * SIZE, BO
 
 	MOVQ N, I
-	SARQ $2, I  // i = m / 4
+	SARQ $2, I  // I = N / 4
 	JE   L12_20
 
 L12_11:
@@ -249,7 +249,6 @@ L12_11:
 	CMPQ AX, $2
 
 	JL L12_13
-
 	KERNEL4x12_I
 	KERNEL4x12_M2
 	KERNEL4x12_M1
@@ -329,7 +328,6 @@ L12_17:
 L12_19:
 
 	SAVE4x12
-
 	DECQ I      // i --
 	JNE  L12_11
 
@@ -437,17 +435,17 @@ L12_49:
 	SAVE1x12
 
 L12_100:
-
+	
 	DECQ J      // j --
 	JG   L12_01
 
 L4_0:
 
-	CMPQ Nmod12, $ 0 // M % 12 == 0
+	CMPQ Mmod12, $ 0 // M % 12 == 0
 	JE   L999
 
 
-	MOVQ Nmod12, J
+	MOVQ Mmod12, J
 	SARQ $2, J     // j = j / 4
 	JE   L2_0
 
@@ -671,7 +669,7 @@ L4_100:
 
 L2_0:
 
-	MOVQ  Nmod12, J
+	MOVQ  Mmod12, J
 	TESTQ $2, J
 	JE    L1_0
 
@@ -846,7 +844,7 @@ L2_100:
 
 L1_0:
 
-	MOVQ  Nmod12, J
+	MOVQ  Mmod12, J
 	TESTQ $1, J
 	JE    L999
 
@@ -1005,4 +1003,19 @@ L1_49:
 L1_100:
 L999:
 	VZEROUPPER
+	RET
+
+LRET:
+
+	LEAQ BUFFER1, BO
+	
+LRET_LOOP:
+
+	VMOVUPS (BO), Y1
+	VMOVUPS Y1, (C)
+	ADDQ $4*SIZE, BO
+	ADDQ $4*SIZE, A
+	ADDQ $4*SIZE, C
+	CMPQ A, AO3
+	JL LRET_LOOP
 	RET
