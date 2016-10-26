@@ -1,6 +1,6 @@
 
 // *******************************************************************************
-//		VMULPD 
+//		VMOVUPS 
 // *******************************************************************************
 
 // VMOVUPS 0 * SIZE (AO), Y1
@@ -68,7 +68,31 @@ BYTE $0xC4; BYTE $0x81; BYTE $0x78; BYTE $0x11; BYTE $0x7C; BYTE $0x17; BYTE $0x
 BYTE $0xC4; BYTE $0xA1; BYTE $0x78; BYTE $0x11; BYTE $0x3C; BYTE $0x10 
 // VMOVUPS X7, (BP)(LDC*1)
 #define VMOVUPS__X7_BP_LDC \
-BYTE $0xC4; BYTE $0xA1; BYTE $0x78; BYTE $0x11; BYTE $0x7C; BYTE $0x15; BYTE $0x00 
+BYTE $0xC4; BYTE $0xA1; BYTE $0x78; BYTE $0x11; BYTE $0x7C; BYTE $0x15; BYTE $0x00
+// VMOVUPS X8, (AX)
+#define VMOVUPS__X8_AX \
+BYTE $0xC5; BYTE $0x78; BYTE $0x11; BYTE $0x00
+// VMOVUPS X8, (AX)(LDC*1)
+#define VMOVUPS__X9_AX_LDC \
+BYTE $0xC4; BYTE $0x21; BYTE $0x78; BYTE $0x11; BYTE $0x0C; BYTE $0x10
+// VMOVUPS X10, (BP)
+#define VMOVUPS__X10_BP \
+BYTE $0xC5; BYTE $0x78; BYTE $0x11; BYTE $0x55; BYTE $0x00
+// VMOVUPS X11, (BP)(LDC*1)
+#define VMOVUPS__X11_BP_LDC \
+BYTE $0xC4; BYTE $0x21; BYTE $0x78; BYTE $0x11; BYTE $0x5C; BYTE $0x15; BYTE $0x00
+// VMOVUPS X12, (AX)
+#define VMOVUPS__X12_AX \
+BYTE $0xC5; BYTE $0x78; BYTE $0x11; BYTE $0x20
+// VMOVUPS X13, (AX)(LDC*1)
+#define VMOVUPS__X13_AX_LDC \
+BYTE $0xC4; BYTE $0x21; BYTE $0x78; BYTE $0x11; BYTE $0x2C; BYTE $0x10
+// VMOVUPS X14, (BP)
+#define VMOVUPS__X14_BP \
+BYTE $0xC5; BYTE $0x78; BYTE $0x11; BYTE $0x75; BYTE $0x00
+// VMOVUPS X15, (BP)(LDC*1)
+#define VMOVUPS__X15_BP_LDC \
+BYTE $0xC4; BYTE $0x21; BYTE $0x78; BYTE $0x11; BYTE $0x7C; BYTE $0x15; BYTE $0x00
 // VMOVUPS Y4, (AX)
 #define VMOVUPS__Y4_AX \
 BYTE $0xC5; BYTE $0xFC; BYTE $0x11; BYTE $0x20 
@@ -94,64 +118,11 @@ BYTE $0xC4; BYTE $0xA1; BYTE $0x7C; BYTE $0x11; BYTE $0x3C; BYTE $0x10
 #define VMOVUPS__Y7_BP_LDC \
 BYTE $0xC4; BYTE $0xA1; BYTE $0x7C; BYTE $0x11; BYTE $0x7C; BYTE $0x15; BYTE $0x00 
 
+
 // *******************************************************************************
 //		VMULPD 
 // *******************************************************************************
 
-// VMULPD XMM0, XMM10, XMM10
-#define VMULPD__X0_X10_X10 \
-BYTE $0xC4; BYTE $0x41; BYTE $0x79; BYTE $0x59; BYTE $0xD2 
-// VMULPD XMM0, XMM11, XMM11
-#define VMULPD__X0_X11_X11 \
-BYTE $0xC4; BYTE $0x41; BYTE $0x79; BYTE $0x59; BYTE $0xDB 
-// VMULPD XMM0, XMM12, XMM12
-#define VMULPD__X0_X12_X12 \
-BYTE $0xC4; BYTE $0x41; BYTE $0x79; BYTE $0x59; BYTE $0xE4 
-// VMULPD XMM0, XMM13, XMM13
-#define VMULPD__X0_X13_X13 \
-BYTE $0xC4; BYTE $0x41; BYTE $0x79; BYTE $0x59; BYTE $0xED 
-// VMULPD XMM0, XMM14, XMM14
-#define VMULPD__X0_X14_X14 \
-BYTE $0xC4; BYTE $0x41; BYTE $0x79; BYTE $0x59; BYTE $0xF6 
-// VMULPD XMM0, XMM15, XMM15
-#define VMULPD__X0_X15_X15 \
-BYTE $0xC4; BYTE $0x41; BYTE $0x79; BYTE $0x59; BYTE $0xFF 
-// VMULPD XMM0, XMM4, XMM4
-#define VMULPD__X0_X4_X4 \
-BYTE $0xC5; BYTE $0xF9; BYTE $0x59; BYTE $0xE4 
-// VMULPD XMM0, XMM5, XMM5
-#define VMULPD__X0_X5_X5 \
-BYTE $0xC5; BYTE $0xF9; BYTE $0x59; BYTE $0xED 
-// VMULPD XMM0, XMM6, XMM6
-#define VMULPD__X0_X6_X6 \
-BYTE $0xC5; BYTE $0xF9; BYTE $0x59; BYTE $0xF6 
-// VMULPD XMM0, XMM7, XMM7
-#define VMULPD__X0_X7_X7 \
-BYTE $0xC5; BYTE $0xF9; BYTE $0x59; BYTE $0xFF 
-// VMULPD XMM0, XMM8, XMM8
-#define VMULPD__X0_X8_X8 \
-BYTE $0xC4; BYTE $0x41; BYTE $0x79; BYTE $0x59; BYTE $0xC0 
-// VMULPD XMM0, XMM9, XMM9
-#define VMULPD__X0_X9_X9 \
-BYTE $0xC4; BYTE $0x41; BYTE $0x79; BYTE $0x59; BYTE $0xC9 
-// VMULPD YMM0, YMM10, YMM10
-#define VMULPD__Y0_Y10_Y10 \
-BYTE $0xC4; BYTE $0x41; BYTE $0x7D; BYTE $0x59; BYTE $0xD2 
-// VMULPD YMM0, YMM11, YMM11
-#define VMULPD__Y0_Y11_Y11 \
-BYTE $0xC4; BYTE $0x41; BYTE $0x7D; BYTE $0x59; BYTE $0xDB 
-// VMULPD YMM0, YMM12, YMM12
-#define VMULPD__Y0_Y12_Y12 \
-BYTE $0xC4; BYTE $0x41; BYTE $0x7D; BYTE $0x59; BYTE $0xE4 
-// VMULPD YMM0, YMM13, YMM13
-#define VMULPD__Y0_Y13_Y13 \
-BYTE $0xC4; BYTE $0x41; BYTE $0x7D; BYTE $0x59; BYTE $0xED 
-// VMULPD YMM0, YMM14, YMM14
-#define VMULPD__Y0_Y14_Y14 \
-BYTE $0xC4; BYTE $0x41; BYTE $0x7D; BYTE $0x59; BYTE $0xF6 
-// VMULPD YMM0, YMM15, YMM15
-#define VMULPD__Y0_Y15_Y15 \
-BYTE $0xC4; BYTE $0x41; BYTE $0x7D; BYTE $0x59; BYTE $0xFF 
 // VMULPD YMM0, YMM1, YMM4
 #define VMULPD__Y0_Y1_Y4 \
 BYTE $0xC5; BYTE $0xFD; BYTE $0x59; BYTE $0xE1 
@@ -188,216 +159,26 @@ BYTE $0xC5; BYTE $0x7D; BYTE $0x59; BYTE $0xF3
 // VMULPD YMM0, YMM3, YMM15
 #define VMULPD__Y0_Y3_Y15 \
 BYTE $0xC5; BYTE $0x7D; BYTE $0x59; BYTE $0xFB 
-// VMULPD YMM0, YMM4, YMM4
-#define VMULPD__Y0_Y4_Y4 \
-BYTE $0xC5; BYTE $0xFD; BYTE $0x59; BYTE $0xE4 
-// VMULPD YMM0, YMM5, YMM5
-#define VMULPD__Y0_Y5_Y5 \
-BYTE $0xC5; BYTE $0xFD; BYTE $0x59; BYTE $0xED 
-// VMULPD YMM0, YMM6, YMM6
-#define VMULPD__Y0_Y6_Y6 \
-BYTE $0xC5; BYTE $0xFD; BYTE $0x59; BYTE $0xF6 
-// VMULPD YMM0, YMM7, YMM7
-#define VMULPD__Y0_Y7_Y7 \
-BYTE $0xC5; BYTE $0xFD; BYTE $0x59; BYTE $0xFF 
-// VMULPD YMM0, YMM8, YMM8
-#define VMULPD__Y0_Y8_Y8 \
-BYTE $0xC4; BYTE $0x41; BYTE $0x7D; BYTE $0x59; BYTE $0xC0 
-// VMULPD YMM0, YMM9, YMM9
-#define VMULPD__Y0_Y9_Y9 \
-BYTE $0xC4; BYTE $0x41; BYTE $0x7D; BYTE $0x59; BYTE $0xC9 
-
-
-// *******************************************************************************
-//		VMULSD
-// *******************************************************************************
-
-
-// VMULSD X0, X10, X10
-#define VMULSD__X0_X10_X10 \
-MULSD X0, X10
-// VMULSD X0, X11, X11
-#define VMULSD__X0_X11_X11 \
-MULSD X0, X11
-// VMULSD X0, X12, X12
-#define VMULSD__X0_X12_X12 \
-MULSD X0, X12
-// VMULSD X0, X13, X13
-#define VMULSD__X0_X13_X13 \
-MULSD X0, X13
-// VMULSD X0, X14, X14
-#define VMULSD__X0_X14_X14 \
-MULSD X0, X14
-// VMULSD X0, X15, X15
-#define VMULSD__X0_X15_X15 \
-MULSD X0, X15
-// VMULSD X0, X4, X4
-#define VMULSD__X0_X4_X4 \
-MULSD X0, X4
-// VMULSD X0, X5, X5
-#define VMULSD__X0_X5_X5 \
-MULSD X0, X5
-// VMULSD X0, X6, X6
-#define VMULSD__X0_X6_X6 \
-MULSD X0, X6
-// VMULSD X0, X7, X7
-#define VMULSD__X0_X7_X7 \
-MULSD X0, X7
-// VMULSD X0, X8, X8
-#define VMULSD__X0_X8_X8 \
-MULSD X0, X8
-// VMULSD X0, X9, X9
-#define VMULSD__X0_X9_X9 \
-MULSD X0, X9
 
 
 // *******************************************************************************
 //		VADDPD
 // *******************************************************************************
 
-
-// VADDPD (CO1), X4, X4
-#define VADDPD__CO1_X4_X4 \
-BYTE $0xC4; BYTE $0xC1; BYTE $0x59; BYTE $0x58; BYTE $0x27 
-// VADDPD (AX), X8, X4
-#define VADDPD__AX_X8_X4 \
-MOVUPS (AX), X4; \
-ADDPD X8, X4 
-// VADDPD (AX), X12, X4
-#define VADDPD__AX_X12_X4 \
-MOVUPS (AX), X4; \
-ADDPD X12, X4 
-// VADDPD 2 * SIZE(CO1), X5, X5
-#define VADDPD__2_CO1__X5_X5 \
-BYTE $0xC4; BYTE $0xC1; BYTE $0x51; BYTE $0x58; BYTE $0x6F; BYTE $0x10 
-// VADDPD (CO1)(LDC*1), X5, X5
-#define VADDPD__CO1_LDC__X5_X5 \
-BYTE $0xC4; BYTE $0x81; BYTE $0x51; BYTE $0x58; BYTE $0x2C; BYTE $0x17 
-// VADDPD (AX)(LDC*1), X13, X5
-#define VADDPD__AX_LDC__X13_X5 \
-MOVUPS (AX)(R10*1), X5; \
-ADDPD X13, X5 
-// VADDPD (AX)(LDC*1), X9, X5
-#define VADDPD__AX_LDC__X9_X5 \
-MOVUPS (AX)(R10*1), X5; \
-ADDPD X9, X5 
-// VADDPD (AX), X6, X6
-#define VADDPD__AX_X6_X6 \
-BYTE $0xC5; BYTE $0xC9; BYTE $0x58; BYTE $0x30
-// VADDPD (CO1)(LDC*1), X6, X6
-#define VADDPD__CO1_LDC__X6_X6 \
-BYTE $0xC4; BYTE $0x81; BYTE $0x49; BYTE $0x58; BYTE $0x34; BYTE $0x17 
-// VADDPD (BP), X10, X6
-#define VADDPD__BP_X10_X6 \
-MOVUPS (BP), X6; \
-ADDPD X10, X6 
-// VADDPD (BP), X14, X6
-#define VADDPD__BP_X14_X6 \
-MOVUPS (BP), X6; \
-ADDPD X14, X6 
-// VADDPD (AX)(LDC*1), X7, X7
-#define VADDPD__AX_LDC__X7_X7 \
-BYTE $0xC4; BYTE $0xA1; BYTE $0x41; BYTE $0x58; BYTE $0x3C; BYTE $0x10
-// VADDPD (BP)(LDC*1), X11, X7
-#define VADDPD__BP_LDC__X11_X7 \
-MOVUPS (BP)(R10*1), X7; \
-ADDPD X11, X7 
-// VADDPD 2 * SIZE(CO1)(LDC*1), X7, X7
-#define VADDPD__2_CO1_LDC__X7_X7 \
-BYTE $0xC4; BYTE $0x81; BYTE $0x41; BYTE $0x58; BYTE $0x7C; BYTE $0x17; BYTE $0x10 
-// VADDPD (BP)(LDC*1), X15, X7
-#define VADDPD__BP_LDC__X15_X7 \
-MOVUPS (BP)(R10*1), X7; \
-ADDPD X15, X7 
-// VADDPD (AX), Y4, Y4
-#define VADDPD__AX_Y4_Y4 \
-BYTE $0xC5; BYTE $0xDD; BYTE $0x58; BYTE $0x20
-// VADDPD (CO1), Y4, Y4
-#define VADDPD__CO1_Y4_Y4 \
-BYTE $0xC4; BYTE $0xC1; BYTE $0x5D; BYTE $0x58; BYTE $0x27
 // VADDPD Y4, Y5, Y4
 #define VADDPD__Y4_Y5_Y4 \
 BYTE $0xC5; BYTE $0xD5; BYTE $0x58; BYTE $0xE4
 // VADDPD Y4, Y6, Y4
 #define VADDPD__Y4_Y6_Y4 \
 BYTE $0xC5; BYTE $0xCD; BYTE $0x58; BYTE $0xE4
-// VADDPD (CO1)(LDC*1), Y5, Y5
-#define VADDPD__CO1_LDC__Y5_Y5 \
-BYTE $0xC4; BYTE $0x81; BYTE $0x55; BYTE $0x58; BYTE $0x2C; BYTE $0x17
-// VADDPD (AX)(LDC*1), Y5, Y5
-#define VADDPD__AX_LDC__Y5_Y5 \
-BYTE $0xC4; BYTE $0xA1; BYTE $0x55; BYTE $0x58; BYTE $0x2C; BYTE $0x10
-// VADDPD (AX), Y6, Y6
-#define VADDPD__AX_Y6_Y6 \
-BYTE $0xC5; BYTE $0xCD; BYTE $0x58; BYTE $0x30
-// VADDPD (BP), Y6, Y6
-#define VADDPD__BP_Y6_Y6 \
-BYTE $0xC5; BYTE $0xCD; BYTE $0x58; BYTE $0x75; BYTE $0x00
 // VADDPD Y6, Y7, Y6
 #define VADDPD__Y6_Y7_Y6 \
 BYTE $0xC5; BYTE $0xC5; BYTE $0x58; BYTE $0xF6
-// VADDPD (AX)(LDC*1), Y7, Y7
-#define VADDPD__AX_LDC__Y7_Y7 \
-BYTE $0xC4; BYTE $0xA1; BYTE $0x45; BYTE $0x58; BYTE $0x3C; BYTE $0x10
-// VADDPD (BP)(LDC*1), Y7, Y7
-#define VADDPD__BP_LDC__Y7_Y7 \
-BYTE $0xC4; BYTE $0xA1; BYTE $0x45; BYTE $0x58; BYTE $0x7C; BYTE $0x15; BYTE $0x00
 
-
-// *******************************************************************************
-//		VADDSD
-// *******************************************************************************
-
-
-// VADDSD (AX)(LDC*1), X13, X5
-#define VADDSD__AX_LDC__X13_X5 \
-MOVSD (AX)(LDC*1), X5; \
-ADDSD X13, X5
-// VADDSD (AX)(LDC*1), X7, X7
-#define VADDSD__AX_LDC__X7_X7 \
-ADDSD (AX)(LDC*1), X7
-// VADDSD (AX)(LDC*1), X9, X5
-#define VADDSD__AX_LDC__X9_X5 \
-MOVSD (AX)(LDC*1), X5; \
-ADDSD X9, X5
-// VADDSD (AX), X12, X4
-#define VADDSD__AX_X12_X4 \
-MOVSD (AX), X4; \
-ADDSD X12, X4
-// VADDSD (AX), X6, X6
-#define VADDSD__AX_X6_X6 \
-ADDSD (AX), X6
-// VADDSD (AX), X8, X4
-#define VADDSD__AX_X8_X4 \
-MOVSD (AX), X4; \
-ADDSD X8, X4
-// VADDSD (BP)(LDC*1), X11, X7
-#define VADDSD__BP_LDC__X11_X7 \
-MOVSD (BP)(LDC*1), X7; \
-ADDSD X11, X7
-// VADDSD (BP)(LDC*1), X15, X7
-#define VADDSD__BP_LDC__X15_X7 \
-MOVSD (BP)(LDC*1), X7; \
-ADDSD X15, X7
-// VADDSD (BP), X10, X6
-#define VADDSD__BP_X10_X6 \
-MOVSD (BP), X6; \
-ADDSD X10, X6
-// VADDSD (BP), X14, X6
-#define VADDSD__BP_X14_X6 \
-MOVSD (BP), X6; \
-ADDSD X14, X6
-// VADDSD (CO1)(LDC*1), X5, X5
-#define VADDSD__CO1_LDC__X5_X5 \
-ADDSD (CO1)(LDC*1), X5
-// VADDSD (CO1), X4, X4
-#define VADDSD__CO1_X4_X4 \
-ADDSD (CO1), X4
 
 // *******************************************************************************
 //		VFMADD231PD
 // *******************************************************************************
-
 
 // VFMADD231PD 0  * SIZE(AO), Y0, Y4
 #define VFMADD231PD__0_AO__Y0_Y4 \
@@ -516,7 +297,6 @@ BYTE $0xC4; BYTE $0x62; BYTE $0xE5; BYTE $0xB8; BYTE $0xF8
 //		VFMADD231SD
 // *******************************************************************************
 
-
 // VFMADD231SD X0, X1, X4
 #define VFMADD231SD__X0_X1_X4 \
 BYTE $0xC4; BYTE $0xE2; BYTE $0xF9; BYTE $0xB9; BYTE $0xE1 
@@ -558,56 +338,205 @@ BYTE $0xC4; BYTE $0x62; BYTE $0xF9; BYTE $0xB9; BYTE $0xF2
 BYTE $0xC4; BYTE $0x62; BYTE $0xF9; BYTE $0xB9; BYTE $0xFB 
 
 
+// *******************************************************************************
+//		VUNPCKLPD
+// *******************************************************************************
+
+// VUNPCKLPD Y4, Y5, Y2
+#define VUNPCKLPD_Y4_Y5_Y2 \
+BYTE $0xC5; BYTE $0xDD; BYTE $0x14; BYTE $0xD5
+// VUNPCKHPD Y5, Y4, Y3
+#define VUNPCKHPD_Y5_Y4_Y3 \
+BYTE $0xC5; BYTE $0xD5; BYTE $0x15; BYTE $0xDC 
+// VUNPCKLPD Y6, Y7, Y4
+#define VUNPCKLPD_Y6_Y7_Y4 \
+BYTE $0xC5; BYTE $0xCD; BYTE $0x14; BYTE $0xE7 
+// VUNPCKHPD Y7, Y6, Y5
+#define VUNPCKHPD_Y7_Y6_Y5 \
+BYTE $0xC5; BYTE $0xC5; BYTE $0x15; BYTE $0xEE
+// VUNPCKLPD Y8, Y9, Y2
+#define VUNPCKLPD_Y8_Y9_Y2 \
+BYTE $0xC4; BYTE $0xC1; BYTE $0x3D; BYTE $0x14; BYTE $0xD1
+// VUNPCKHPD Y9, Y8, Y3
+#define VUNPCKHPD_Y9_Y8_Y3 \
+BYTE $0xC4; BYTE $0xC1; BYTE $0x35; BYTE $0x15; BYTE $0xD8
+// VUNPCKLPD Y10, Y11, Y4
+#define VUNPCKLPD_Y10_Y11_Y4 \
+BYTE $0xC4; BYTE $0xC1; BYTE $0x2D; BYTE $0x14; BYTE $0xE3
+// VUNPCKHPD Y11, Y10, Y5
+#define VUNPCKHPD_Y11_Y10_Y5 \
+BYTE $0xC4; BYTE $0xC1; BYTE $0x25; BYTE $0x15; BYTE $0xEA
+// VUNPCKLPD Y12, Y13, Y2
+#define VUNPCKLPD_Y12_Y13_Y2 \
+BYTE $0xC4; BYTE $0xC1; BYTE $0x1D; BYTE $0x14; BYTE $0xD5
+// VUNPCKHPD Y13, Y12, Y3
+#define VUNPCKHPD_Y13_Y12_Y3 \
+BYTE $0xC4; BYTE $0xC1; BYTE $0x15; BYTE $0x15; BYTE $0xDC
+// VUNPCKLPD Y14, Y15, Y4
+#define VUNPCKLPD_Y14_Y15_Y4 \
+BYTE $0xC4; BYTE $0xC1; BYTE $0x0D; BYTE $0x14; BYTE $0xE7
+// VUNPCKHPD Y15, Y14, Y5
+#define VUNPCKHPD_Y15_Y14_Y5 \
+BYTE $0xC4; BYTE $0xC1; BYTE $0x05; BYTE $0x15; BYTE $0xEE
+
+
+// *******************************************************************************
+//		VPERM2F128
+// *******************************************************************************
+
+// VPERM2F128 $0x31, Y4, Y2, Y6
+#define VPERM2F128_0x31_Y4_Y2_Y6 \
+BYTE $0xC4; BYTE $0xE3; BYTE $0x5D; BYTE $0x06; BYTE $0xF2; BYTE $0x31 
+// VPERM2F128 $0x31, Y5, Y3, Y7
+#define VPERM2F128_0x31_Y5_Y3_Y7 \
+BYTE $0xC4; BYTE $0xE3; BYTE $0x55; BYTE $0x06; BYTE $0xFB; BYTE $0x31 
+// VPERM2F128 $0x20, Y2, Y4, Y4
+#define VPERM2F128_0x20_Y2_Y4_Y4 \
+BYTE $0xC4; BYTE $0xE3; BYTE $0x6D; BYTE $0x06; BYTE $0xE4; BYTE $0x20 
+// VPERM2F128 $0x20, Y3, Y5, Y5
+#define VPERM2F128_0x20_Y3_Y5_Y5 \
+BYTE $0xC4; BYTE $0xE3; BYTE $0x65; BYTE $0x06; BYTE $0xED; BYTE $0x20
+
+
+// *******************************************************************************
+//		VFMADD213PD
+// *******************************************************************************
+
+// VFMADD213PD (CO1), Y0, Y4
+#define VFMADD213PD_CO1__Y0_Y4 \ 
+BYTE $0xC4; BYTE $0xC2; BYTE $0xFD; BYTE $0xA8; BYTE $0x27
+// VFMADD213PD (CO1)(LDC*1), Y0, Y5
+#define VFMADD213PD_CO1_LDC__Y0_Y5 \
+BYTE $0xC4; BYTE $0x82; BYTE $0xFD; BYTE $0xA8; BYTE $0x2C; BYTE $0x17
+// VFMADD213PD (AX), Y0, Y6
+#define VFMADD213PD_AX__Y0_Y6 \
+BYTE $0xC4; BYTE $0xE2; BYTE $0xFD; BYTE $0xA8; BYTE $0x30
+// VFMADD213PD (AX)(LDC*1), Y0, Y7
+#define VFMADD213PD_AX_LDC__Y0_Y7 \
+BYTE $0xC4; BYTE $0xA2; BYTE $0xFD; BYTE $0xA8; BYTE $0x3C; BYTE $0x10
+
+// VFMADD213PD (AX), Y0, Y4
+#define VFMADD213PD_AX__Y0_Y4 \
+BYTE $0xC4; BYTE $0xE2; BYTE $0xFD; BYTE $0xA8; BYTE $0x20
+// VFMADD213PD (AX)(LDC*1), Y0, Y5
+#define VFMADD213PD_AX_LDC__Y0_Y5 \
+BYTE $0xC4; BYTE $0xA2; BYTE $0xFD; BYTE $0xA8; BYTE $0x2C; BYTE $0x10
+// VFMADD213PD (BP), Y0, Y6
+#define VFMADD213PD_BP__Y0_Y6 \
+BYTE $0xC4; BYTE $0xE2; BYTE $0xFD; BYTE $0xA8; BYTE $0x75; BYTE $0x00
+// VFMADD213PD (BP)(LDC*1), Y0, Y7
+#define VFMADD213PD_BP_LDC__Y0_Y7 \
+BYTE $0xC4; BYTE $0xA2; BYTE $0xFD; BYTE $0xA8; BYTE $0x7C; BYTE $0x15; BYTE $0x00
+
+// VFMADD213PD (CO1), X0, X4
+#define VFMADD213PD_CO1__X0_X4 \ 
+BYTE $0xC4; BYTE $0xC2; BYTE $0xF9; BYTE $0xA8; BYTE $0x27
+// VFMADD213PD (CO1)(LDC*1), X0, X5
+#define VFMADD213PD_CO1_LDC__X0_X5		\
+BYTE $0xC4; BYTE $0x82; BYTE $0xF9; BYTE $0xA8; BYTE $0x34; BYTE $0x17
+// VFMADD213PD (AX), X0, X6
+#define VFMADD213PD_AX__X0_X6 \
+BYTE $0xC4; BYTE $0xE2; BYTE $0xF9; BYTE $0xA8; BYTE $0x30
+// VFMADD213PD (AX)(LDC*1), X0, X7
+#define VFMADD213PD_AX_LDC__X0_X7 \
+BYTE $0xC4; BYTE $0xA2; BYTE $0xF9; BYTE $0xA8; BYTE $0x3C; BYTE $0x10
+
+// VFMADD213PD (AX), X0, X8
+#define VFMADD213PD_AX__X0_X8					\
+BYTE $0xC4; BYTE $0x62; BYTE $0xF9; BYTE $0xA8; BYTE $0x00
+// VFMADD213PD (AX)(LDC*1), X0, X9
+#define VFMADD213PD_AX_LDC__X0_X9 \
+BYTE $0xC4; BYTE $0x22; BYTE $0xF9; BYTE $0xA8; BYTE $0x0C; BYTE $0x10
+// VFMADD213PD (BP), X0, X10
+#define VFMADD213PD_BP__X0_X10 \
+BYTE $0xC4; BYTE $0x62; BYTE $0xF9; BYTE $0xA8; BYTE $0x55; BYTE $0x00
+// VFMADD213PD (BP)(LDC*1), X0, X11
+#define VFMADD213PD_BP_LDC__X0_X11 \
+BYTE $0xC4; BYTE $0x22; BYTE $0xF9; BYTE $0xA8; BYTE $0x5C; BYTE $0x15; BYTE $0x00
+
+// VFMADD213PD (AX), X0, X12
+#define VFMADD213PD_AX__X0_X12					\
+BYTE $0xC4; BYTE $0x62; BYTE $0xF9; BYTE $0xA8; BYTE $0x20
+// VFMADD213PD (AX)(LDC*1), X0, X13
+#define VFMADD213PD_AX_LDC__X0_X13 \
+BYTE $0xC4; BYTE $0x22; BYTE $0xF9; BYTE $0xA8; BYTE $0x2C; BYTE $0x10
+// VFMADD213PD (BP), X0, X14
+#define VFMADD213PD_BP__X0_X14 \
+BYTE $0xC4; BYTE $0x62; BYTE $0xF9; BYTE $0xA8; BYTE $0x75; BYTE $0x00
+// VFMADD213PD (BP)(LDC*1), X0, X15
+#define VFMADD213PD_BP_LDC__X0_X15 \
+BYTE $0xC4; BYTE $0x22; BYTE $0xF9; BYTE $0xA8; BYTE $0x7C; BYTE $0x15; BYTE $0x00
+
+// VFMADD213PD 2*SIZE(CO1), X0, X5
+#define VFMADD213PD_2_CO1__X0_X5		\
+BYTE $0xC4; BYTE $0xC2; BYTE $0xF9; BYTE $0xA8; BYTE $0x6F; BYTE $0x10
+// VFMADD213PD (CO1)(LDC*1), X0, X6
+#define VFMADD213PD_CO1_LDC__X0_X6 \
+BYTE $0xC4; BYTE $0x82; BYTE $0xF9; BYTE $0xA8; BYTE $0x34; BYTE $0x17
+// VFMADD213PD 2*SIZE(CO1)(LDC*1), X0, X7	
+#define VFMADD213PD_2_CO1_LDC__X0_X7 \
+BYTE $0xC4; BYTE $0x82; BYTE $0xF9; BYTE $0xA8; BYTE $0x7C; BYTE $0x17; BYTE $0x10
+
+
+// *******************************************************************************
+//		VFMADD213SD
+// *******************************************************************************
+
+// VFMADD213SD (CO1), X0, X4
+#define VFMADD213SD_CO1__X0_X4 \ 
+BYTE $0xC4; BYTE $0xC2; BYTE $0xF9; BYTE $0xA9; BYTE $0x27
+// VFMADD213SD (CO1)(LDC*1), X0, X5
+#define VFMADD213SD_CO1_LDC__X0_X5		\
+BYTE $0xC4; BYTE $0x82; BYTE $0xF9; BYTE $0xA9; BYTE $0x2C; BYTE $0x17
+// VFMADD213SD (AX), X0, X6
+#define VFMADD213SD_AX__X0_X6 \
+BYTE $0xC4; BYTE $0xE2; BYTE $0xF9; BYTE $0xA9; BYTE $0x30
+// VFMADD213SD (AX)(LDC*1), X0, X7
+#define VFMADD213SD_AX_LDC__X0_X7 \
+BYTE $0xC4; BYTE $0xA2; BYTE $0xF9; BYTE $0xA9; BYTE $0x3C; BYTE $0x10
+
+// VFMADD213SD (AX), X0, X8
+#define VFMADD213SD_AX__X0_X8					\
+BYTE $0xC4; BYTE $0x62; BYTE $0xF9; BYTE $0xA9; BYTE $0x00
+// VFMADD213SD (AX)(LDC*1), X0, X9
+#define VFMADD213SD_AX_LDC__X0_X9 \
+BYTE $0xC4; BYTE $0x22; BYTE $0xF9; BYTE $0xA9; BYTE $0x0C; BYTE $0x10
+// VFMADD213SD (BP), X0, X10
+#define VFMADD213SD_BP__X0_X10 \
+BYTE $0xC4; BYTE $0x62; BYTE $0xF9; BYTE $0xA9; BYTE $0x55; BYTE $0x00
+// VFMADD213SD (BP)(LDC*1), X0, X11
+#define VFMADD213SD_BP_LDC__X0_X11 \
+BYTE $0xC4; BYTE $0x22; BYTE $0xF9; BYTE $0xA9; BYTE $0x5C; BYTE $0x15; BYTE $0x00
+
+// VFMADD213SD (AX), X0, X12
+#define VFMADD213SD_AX__X0_X12					\
+BYTE $0xC4; BYTE $0x62; BYTE $0xF9; BYTE $0xA9; BYTE $0x20
+// VFMADD213SD (AX)(LDC*1), X0, X13
+#define VFMADD213SD_AX_LDC__X0_X13 \
+BYTE $0xC4; BYTE $0x22; BYTE $0xF9; BYTE $0xA9; BYTE $0x2C; BYTE $0x10
+// VFMADD213SD (BP), X0, X14
+#define VFMADD213SD_BP__X0_X14 \
+BYTE $0xC4; BYTE $0x62; BYTE $0xF9; BYTE $0xA9; BYTE $0x75; BYTE $0x00
+// VFMADD213SD (BP)(LDC*1), X0, X15
+#define VFMADD213SD_BP_LDC__X0_X15 \
+BYTE $0xC4; BYTE $0x22; BYTE $0xF9; BYTE $0xA9; BYTE $0x7C; BYTE $0x15; BYTE $0x00
+
 
 // *******************************************************************************
 //		VPERMPD
 // *******************************************************************************
 
-
 // VPERMPD $ 0x1b, Y0, Y0
 #define VPERMPD__0x1b_Y0_Y0 \
 BYTE $0xC4; BYTE $0xE3; BYTE $0xFD; BYTE $0x01; BYTE $0xC0; BYTE $0x1B
-// VPERMPD $ 0x1b, Y2, Y2
-#define VPERMPD__0x1b_Y2_Y2 \
-BYTE $0xC4; BYTE $0xE3; BYTE $0xFD; BYTE $0x01; BYTE $0xD2; BYTE $0x1B
-// VPERMPD $ 0x1b, Y3, Y3
-#define VPERMPD__0x1b_Y3_Y3 \
-BYTE $0xC4; BYTE $0xE3; BYTE $0xFD; BYTE $0x01; BYTE $0xDB; BYTE $0x1B
 // VPERMPD $ 0xb1, Y0, Y0
 #define VPERMPD__0xb1_Y0_Y0 \
 BYTE $0xC4; BYTE $0xE3; BYTE $0xFD; BYTE $0x01; BYTE $0xC0; BYTE $0xB1
-// VPERMPD $ 0xb1, Y11, Y11
-#define VPERMPD__0xb1_Y11_Y11 \
-BYTE $0xC4; BYTE $0x43; BYTE $0xFD; BYTE $0x01; BYTE $0xDB; BYTE $0xB1
-// VPERMPD $ 0xb1, Y13, Y13
-#define VPERMPD__0xb1_Y13_Y13 \
-BYTE $0xC4; BYTE $0x43; BYTE $0xFD; BYTE $0x01; BYTE $0xED; BYTE $0xB1
-// VPERMPD $ 0xb1, Y15, Y15
-#define VPERMPD__0xb1_Y15_Y15 \
-BYTE $0xC4; BYTE $0x43; BYTE $0xFD; BYTE $0x01; BYTE $0xFF; BYTE $0xB1
-// VPERMPD $ 0xb1, Y2, Y2
-#define VPERMPD__0xb1_Y2_Y2 \
-BYTE $0xC4; BYTE $0xE3; BYTE $0xFD; BYTE $0x01; BYTE $0xD2; BYTE $0xB1
-// VPERMPD $ 0xb1, Y3, Y3
-#define VPERMPD__0xb1_Y3_Y3 \
-BYTE $0xC4; BYTE $0xE3; BYTE $0xFD; BYTE $0x01; BYTE $0xDB; BYTE $0xB1
-// VPERMPD $ 0xb1, Y5, Y5
-#define VPERMPD__0xb1_Y5_Y5 \
-BYTE $0xC4; BYTE $0xE3; BYTE $0xFD; BYTE $0x01; BYTE $0xED; BYTE $0xB1
-// VPERMPD $ 0xb1, Y7, Y7
-#define VPERMPD__0xb1_Y7_Y7 \
-BYTE $0xC4; BYTE $0xE3; BYTE $0xFD; BYTE $0x01; BYTE $0xFF; BYTE $0xB1
-// VPERMPD $ 0xb1, Y9, Y9
-#define VPERMPD__0xb1_Y9_Y9 \
-BYTE $0xC4; BYTE $0x43; BYTE $0xFD; BYTE $0x01; BYTE $0xC9; BYTE $0xB1
-
-
 
 
 // *******************************************************************************
 //		VMOVDDUP
 // *******************************************************************************
-
 
 // VMOVDDUP -1 * SIZE(BO), X3
 #define VMOVDDUP__n1_BO__X3 \
@@ -659,11 +588,9 @@ BYTE $0xC5; BYTE $0xFB; BYTE $0x12; BYTE $0x56; BYTE $0xA0
 BYTE $0xC5; BYTE $0xFB; BYTE $0x12; BYTE $0x43; BYTE $0x30 
 
 
-
 // *******************************************************************************
 //		VBROADCASTSD
 // *******************************************************************************
-
 
 // VBROADCASTSD -5  * SIZE(BO), Y3
 #define VBROADCASTSD__n5_BO__Y3 \
@@ -695,58 +622,3 @@ BYTE $0xC4; BYTE $0xE2; BYTE $0x7D; BYTE $0x19; BYTE $0x56; BYTE $0xA0
 // VBROADCASTSD ALPHA, Y0
 #define VBROADCASTSD__ALPHA_Y0 \
 BYTE $0xC4; BYTE $0xE2; BYTE $0x7D; BYTE $0x19; BYTE $0x43; BYTE $0x30 
-
-
-// *******************************************************************************
-//		VBLENDPD
-// *******************************************************************************
-
-
-// VBLENDPD $ 0x03, Y0, Y2, Y4
-#define VBLENDPD__0x03_Y0_Y2_Y4 \
-BYTE $0xC4; BYTE $0xE3; BYTE $0x6D; BYTE $0x0D; BYTE $0xE0; BYTE $0x03 
-// VBLENDPD $ 0x03, Y1, Y3, Y5
-#define VBLENDPD__0x03_Y1_Y3_Y5 \
-BYTE $0xC4; BYTE $0xE3; BYTE $0x65; BYTE $0x0D; BYTE $0xE9; BYTE $0x03 
-// VBLENDPD $ 0x03, Y2, Y0, Y6
-#define VBLENDPD__0x03_Y2_Y0_Y6 \
-BYTE $0xC4; BYTE $0xE3; BYTE $0x7D; BYTE $0x0D; BYTE $0xF2; BYTE $0x03 
-// VBLENDPD $ 0x03, Y3, Y1, Y7
-#define VBLENDPD__0x03_Y3_Y1_Y7 \
-BYTE $0xC4; BYTE $0xE3; BYTE $0x75; BYTE $0x0D; BYTE $0xFB; BYTE $0x03 
-// VBLENDPD $ 0x05, Y11, Y10, Y3
-#define VBLENDPD__0x05_Y11_Y10_Y3 \
-BYTE $0xC4; BYTE $0xC3; BYTE $0x2D; BYTE $0x0D; BYTE $0xDB; BYTE $0x05 
-// VBLENDPD $ 0x05, Y13, Y12, Y1
-#define VBLENDPD__0x05_Y13_Y12_Y1 \
-BYTE $0xC4; BYTE $0xC3; BYTE $0x1D; BYTE $0x0D; BYTE $0xCD; BYTE $0x05 
-// VBLENDPD $ 0x05, Y15, Y14, Y3
-#define VBLENDPD__0x05_Y15_Y14_Y3 \
-BYTE $0xC4; BYTE $0xC3; BYTE $0x0D; BYTE $0x0D; BYTE $0xDF; BYTE $0x05 
-// VBLENDPD $ 0x05, Y5, Y4, Y1
-#define VBLENDPD__0x05_Y5_Y4_Y1 \
-BYTE $0xC4; BYTE $0xE3; BYTE $0x5D; BYTE $0x0D; BYTE $0xCD; BYTE $0x05 
-// VBLENDPD $ 0x05, Y7, Y6, Y3
-#define VBLENDPD__0x05_Y7_Y6_Y3 \
-BYTE $0xC4; BYTE $0xE3; BYTE $0x4D; BYTE $0x0D; BYTE $0xDF; BYTE $0x05 
-// VBLENDPD $ 0x05, Y9, Y8, Y1
-#define VBLENDPD__0x05_Y9_Y8_Y1 \
-BYTE $0xC4; BYTE $0xC3; BYTE $0x3D; BYTE $0x0D; BYTE $0xC9; BYTE $0x05 
-// VBLENDPD $ 0x0a, Y11, Y10, Y2
-#define VBLENDPD__0x0a_Y11_Y10_Y2 \
-BYTE $0xC4; BYTE $0xC3; BYTE $0x2D; BYTE $0x0D; BYTE $0xD3; BYTE $0x0A 
-// VBLENDPD $ 0x0a, Y13, Y12, Y0
-#define VBLENDPD__0x0a_Y13_Y12_Y0 \
-BYTE $0xC4; BYTE $0xC3; BYTE $0x1D; BYTE $0x0D; BYTE $0xC5; BYTE $0x0A 
-// VBLENDPD $ 0x0a, Y15, Y14, Y2
-#define VBLENDPD__0x0a_Y15_Y14_Y2 \
-BYTE $0xC4; BYTE $0xC3; BYTE $0x0D; BYTE $0x0D; BYTE $0xD7; BYTE $0x0A 
-// VBLENDPD $ 0x0a, Y5, Y4, Y0
-#define VBLENDPD__0x0a_Y5_Y4_Y0 \
-BYTE $0xC4; BYTE $0xE3; BYTE $0x5D; BYTE $0x0D; BYTE $0xC5; BYTE $0x0A 
-// VBLENDPD $ 0x0a, Y7, Y6, Y2
-#define VBLENDPD__0x0a_Y7_Y6_Y2 \
-BYTE $0xC4; BYTE $0xE3; BYTE $0x4D; BYTE $0x0D; BYTE $0xD7; BYTE $0x0A 
-// VBLENDPD $ 0x0a, Y9, Y8, Y0
-#define VBLENDPD__0x0a_Y9_Y8_Y0 \
-BYTE $0xC4; BYTE $0xC3; BYTE $0x3D; BYTE $0x0D; BYTE $0xC1; BYTE $0x0A 

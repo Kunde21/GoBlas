@@ -18,257 +18,216 @@
 	VXORPD Y15, Y15, Y15
 
 #define KERNEL4x12_I \
-	PREFETCHT0 A_PR1(BO);          \
-	VMOVUPS__n12_AO__Y1; \
-	PREFETCHT0 B_PR1(AO);          \
-	VMOVUPS__n16_BO__Y0; \
-	PREFETCHT0 B_PR1+64(AO);       \
-	VMOVUPS__n8_AO__Y2;  \
-	PREFETCHT0 B_PR1+128(AO);      \
-	VMOVUPS__n4_AO__Y3;  \
+	PREFETCHT0 A_PR1(BO);     \
+	VMOVUPS__n12_AO__Y1;      \
+	PREFETCHT0 B_PR1(AO);     \
+	VMOVUPS__n16_BO__Y0;      \
+	PREFETCHT0 B_PR1+64(AO);  \
+	VMOVUPS__n8_AO__Y2;       \
+	PREFETCHT0 B_PR1+128(AO); \
+	VMOVUPS__n4_AO__Y3;       \
 	VMULPD__Y0_Y1_Y4;         \
-	PREFETCHT0 B_PR1+192(AO);      \
+	PREFETCHT0 B_PR1+192(AO); \
 	VMULPD__Y0_Y2_Y8;         \
 	VMULPD__Y0_Y3_Y12;        \
-	PREFETCHT0 B_PR1+256(AO);      \
-	VPERMPD__0xb1_Y0_Y0;     \
+	PREFETCHT0 B_PR1+256(AO); \
+	VPERMPD__0xb1_Y0_Y0;      \
 	VMULPD__Y0_Y1_Y5;         \
 	VMULPD__Y0_Y2_Y9;         \
 	VMULPD__Y0_Y3_Y13;        \
-	VPERMPD__0x1b_Y0_Y0;     \
+	VPERMPD__0x1b_Y0_Y0;      \
 	VMULPD__Y0_Y1_Y6;         \
 	VMULPD__Y0_Y2_Y10;        \
-\
-	ADDQ    $ 12*SIZE, AO;      \
+	                          \
+	ADDQ       $ 12*SIZE, AO; \
 	VMULPD__Y0_Y3_Y14;        \
-	VPERMPD__0xb1_Y0_Y0;     \
+	VPERMPD__0xb1_Y0_Y0;      \
 	VMULPD__Y0_Y1_Y7;         \
-	VMOVUPS__n12_AO__Y1; \
+	VMOVUPS__n12_AO__Y1;      \
 	VMULPD__Y0_Y2_Y11;        \
-	VMOVUPS__n8_AO__Y2;  \
+	VMOVUPS__n8_AO__Y2;       \
 	VMULPD__Y0_Y3_Y15;        \
 	VMOVUPS__n4_AO__Y3
 
 #define KERNEL4x12_M1 \
-	PREFETCHT0  A_PR1(BO);          \
-	VMOVUPS__n16_BO__Y0; \
-	PREFETCHT0  B_PR1(AO);          \
-	VFMADD231PD__Y0_Y1_Y4;         \
-	PREFETCHT0  B_PR1+64(AO);       \
-	VFMADD231PD__Y0_Y2_Y8;         \
-	PREFETCHT0  B_PR1+128(AO);      \
-	VFMADD231PD__Y0_Y3_Y12;        \
-	VPERMPD__0xb1_Y0_Y0;     \
-	VFMADD231PD__Y0_Y1_Y5;         \
-	VFMADD231PD__Y0_Y2_Y9;         \
-	VFMADD231PD__Y0_Y3_Y13;        \
-	VPERMPD__0x1b_Y0_Y0;     \
-	VFMADD231PD__Y0_Y1_Y6;         \
-	VFMADD231PD__Y0_Y2_Y10;        \
-\
-	VFMADD231PD__Y0_Y3_Y14;        \
-	VPERMPD__0xb1_Y0_Y0;     \
-	VFMADD231PD__Y0_Y1_Y7;         \
-	VMOVUPS__n12_AO__Y1; \
-	VFMADD231PD__Y0_Y2_Y11;        \
-	VMOVUPS__n8_AO__Y2;  \
-	VFMADD231PD__Y0_Y3_Y15;        \
+	PREFETCHT0 A_PR1(BO);     \
+	VMOVUPS__n16_BO__Y0;      \
+	PREFETCHT0 B_PR1(AO);     \
+	VFMADD231PD__Y0_Y1_Y4;    \
+	PREFETCHT0 B_PR1+64(AO);  \
+	VFMADD231PD__Y0_Y2_Y8;    \
+	PREFETCHT0 B_PR1+128(AO); \
+	VFMADD231PD__Y0_Y3_Y12;   \
+	VPERMPD__0xb1_Y0_Y0;      \
+	VFMADD231PD__Y0_Y1_Y5;    \
+	VFMADD231PD__Y0_Y2_Y9;    \
+	VFMADD231PD__Y0_Y3_Y13;   \
+	VPERMPD__0x1b_Y0_Y0;      \
+	VFMADD231PD__Y0_Y1_Y6;    \
+	VFMADD231PD__Y0_Y2_Y10;   \
+	                          \
+	VFMADD231PD__Y0_Y3_Y14;   \
+	VPERMPD__0xb1_Y0_Y0;      \
+	VFMADD231PD__Y0_Y1_Y7;    \
+	VMOVUPS__n12_AO__Y1;      \
+	VFMADD231PD__Y0_Y2_Y11;   \
+	VMOVUPS__n8_AO__Y2;       \
+	VFMADD231PD__Y0_Y3_Y15;   \
 	VMOVUPS__n4_AO__Y3
 
 #define KERNEL4x12_M2 \
-	VMOVUPS__n12_BO__Y0; \
-	VFMADD231PD__Y0_Y1_Y4;         \
-	VFMADD231PD__Y0_Y2_Y8;         \
-	VFMADD231PD__Y0_Y3_Y12;        \
-	VPERMPD__0xb1_Y0_Y0;     \
-	VFMADD231PD__Y0_Y1_Y5;         \
-	VFMADD231PD__Y0_Y2_Y9;         \
-	VFMADD231PD__Y0_Y3_Y13;        \
-	VPERMPD__0x1b_Y0_Y0;     \
-	VFMADD231PD__Y0_Y1_Y6;         \
-	VFMADD231PD__Y0_Y2_Y10;        \
-\
-	ADDQ        $ 8*SIZE, BO;     \
-	VFMADD231PD__Y0_Y3_Y14;      \
-	VPERMPD__0xb1_Y0_Y0;   \
-	VFMADD231PD__Y0_Y1_Y7;       \
-	VMOVUPS__0_AO__Y1; \
-	VFMADD231PD__Y0_Y2_Y11;      \
-	VMOVUPS__4_AO__Y2; \
-	VFMADD231PD__Y0_Y3_Y15;      \
-	VMOVUPS__8_AO__Y3; \
-	ADDQ        $ 24*SIZE, AO
+	VMOVUPS__n12_BO__Y0;    \
+	VFMADD231PD__Y0_Y1_Y4;  \
+	VFMADD231PD__Y0_Y2_Y8;  \
+	VFMADD231PD__Y0_Y3_Y12; \
+	VPERMPD__0xb1_Y0_Y0;    \
+	VFMADD231PD__Y0_Y1_Y5;  \
+	VFMADD231PD__Y0_Y2_Y9;  \
+	VFMADD231PD__Y0_Y3_Y13; \
+	VPERMPD__0x1b_Y0_Y0;    \
+	VFMADD231PD__Y0_Y1_Y6;  \
+	VFMADD231PD__Y0_Y2_Y10; \
+	                        \
+	ADDQ $ 8*SIZE, BO;      \
+	VFMADD231PD__Y0_Y3_Y14; \
+	VPERMPD__0xb1_Y0_Y0;    \
+	VFMADD231PD__Y0_Y1_Y7;  \
+	VMOVUPS__0_AO__Y1;      \
+	VFMADD231PD__Y0_Y2_Y11; \
+	VMOVUPS__4_AO__Y2;      \
+	VFMADD231PD__Y0_Y3_Y15; \
+	VMOVUPS__8_AO__Y3;      \
+	ADDQ $ 24*SIZE, AO
 
 #define KERNEL4x12_E \
-	VMOVUPS__n12_BO__Y0; \
-	VFMADD231PD__Y0_Y1_Y4;         \
-	VFMADD231PD__Y0_Y2_Y8;         \
-	VFMADD231PD__Y0_Y3_Y12;        \
-	VPERMPD__0xb1_Y0_Y0;     \
-	VFMADD231PD__Y0_Y1_Y5;         \
-	VFMADD231PD__Y0_Y2_Y9;         \
-	VFMADD231PD__Y0_Y3_Y13;        \
-	VPERMPD__0x1b_Y0_Y0;     \
-	VFMADD231PD__Y0_Y1_Y6;         \
-	VFMADD231PD__Y0_Y2_Y10;        \
-\
-	ADDQ        $ 8*SIZE, BO;   \
-	VFMADD231PD__Y0_Y3_Y14;    \
-	VPERMPD__0xb1_Y0_Y0; \
-	VFMADD231PD__Y0_Y1_Y7;     \
-	VFMADD231PD__Y0_Y2_Y11;    \
-	VFMADD231PD__Y0_Y3_Y15;    \
-	ADDQ        $ 12*SIZE, AO
+	VMOVUPS__n12_BO__Y0;    \
+	VFMADD231PD__Y0_Y1_Y4;  \
+	VFMADD231PD__Y0_Y2_Y8;  \
+	VFMADD231PD__Y0_Y3_Y12; \
+	VPERMPD__0xb1_Y0_Y0;    \
+	VFMADD231PD__Y0_Y1_Y5;  \
+	VFMADD231PD__Y0_Y2_Y9;  \
+	VFMADD231PD__Y0_Y3_Y13; \
+	VPERMPD__0x1b_Y0_Y0;    \
+	VFMADD231PD__Y0_Y1_Y6;  \
+	VFMADD231PD__Y0_Y2_Y10; \
+	                        \
+	ADDQ $ 8*SIZE, BO;      \
+	VFMADD231PD__Y0_Y3_Y14; \
+	VPERMPD__0xb1_Y0_Y0;    \
+	VFMADD231PD__Y0_Y1_Y7;  \
+	VFMADD231PD__Y0_Y2_Y11; \
+	VFMADD231PD__Y0_Y3_Y15; \
+	ADDQ $ 12*SIZE, AO
 
 #define KERNEL4x12_SUB \
-	VMOVUPS__n12_AO__Y1; \
-	VMOVUPS__n16_BO__Y0; \
-	VFMADD231PD__Y0_Y1_Y4;         \
-	VMOVUPS__n8_AO__Y2;  \
-	VFMADD231PD__Y0_Y2_Y8;         \
-	VMOVUPS__n4_AO__Y3;  \
-	VFMADD231PD__Y0_Y3_Y12;        \
-	VPERMPD__0xb1_Y0_Y0;     \
-	VFMADD231PD__Y0_Y1_Y5;         \
-	VFMADD231PD__Y0_Y2_Y9;         \
-	ADDQ        $ 12*SIZE, AO;      \
-	VFMADD231PD__Y0_Y3_Y13;        \
-	VPERMPD__0x1b_Y0_Y0;     \
-	VFMADD231PD__Y0_Y1_Y6;         \
-	VFMADD231PD__Y0_Y2_Y10;        \
-	ADDQ        $ 4*SIZE, BO;       \
-	VFMADD231PD__Y0_Y3_Y14;        \
-	VPERMPD__0xb1_Y0_Y0;     \
-	VFMADD231PD__Y0_Y1_Y7;         \
-	VFMADD231PD__Y0_Y2_Y11;        \
+	VMOVUPS__n12_AO__Y1;    \
+	VMOVUPS__n16_BO__Y0;    \
+	VFMADD231PD__Y0_Y1_Y4;  \
+	VMOVUPS__n8_AO__Y2;     \
+	VFMADD231PD__Y0_Y2_Y8;  \
+	VMOVUPS__n4_AO__Y3;     \
+	VFMADD231PD__Y0_Y3_Y12; \
+	VPERMPD__0xb1_Y0_Y0;    \
+	VFMADD231PD__Y0_Y1_Y5;  \
+	VFMADD231PD__Y0_Y2_Y9;  \
+	ADDQ $ 12*SIZE, AO;     \
+	VFMADD231PD__Y0_Y3_Y13; \
+	VPERMPD__0x1b_Y0_Y0;    \
+	VFMADD231PD__Y0_Y1_Y6;  \
+	VFMADD231PD__Y0_Y2_Y10; \
+	ADDQ $ 4*SIZE, BO;      \
+	VFMADD231PD__Y0_Y3_Y14; \
+	VPERMPD__0xb1_Y0_Y0;    \
+	VFMADD231PD__Y0_Y1_Y7;  \
+	VFMADD231PD__Y0_Y2_Y11; \
 	VFMADD231PD__Y0_Y3_Y15
 
 #define SAVE4x12 \
-	VBROADCASTSD__ALPHA_Y0; \
-\
-	VMULPD__Y0_Y4_Y4; \
-	VMULPD__Y0_Y5_Y5; \
-	VMULPD__Y0_Y6_Y6; \
-	VMULPD__Y0_Y7_Y7; \
-\
-	VMULPD__Y0_Y8_Y8;   \
-	VMULPD__Y0_Y9_Y9;   \
-	VMULPD__Y0_Y10_Y10; \
-	VMULPD__Y0_Y11_Y11; \
-\
-	VMULPD__Y0_Y12_Y12; \
-	VMULPD__Y0_Y13_Y13; \
-	VMULPD__Y0_Y14_Y14; \
-	VMULPD__Y0_Y15_Y15; \
-\
-	VPERMPD__0xb1_Y5_Y5; \
-	VPERMPD__0xb1_Y7_Y7; \
-\
-	VBLENDPD__0x0a_Y5_Y4_Y0; \
-	VBLENDPD__0x05_Y5_Y4_Y1; \
-	VBLENDPD__0x0a_Y7_Y6_Y2; \
-	VBLENDPD__0x05_Y7_Y6_Y3; \
-\
-	VPERMPD__0x1b_Y2_Y2; \
-	VPERMPD__0x1b_Y3_Y3; \
-	VPERMPD__0xb1_Y2_Y2; \
-	VPERMPD__0xb1_Y3_Y3; \
-\
-	VBLENDPD__0x03_Y0_Y2_Y4; \
-	VBLENDPD__0x03_Y1_Y3_Y5; \
-	VBLENDPD__0x03_Y2_Y0_Y6; \
-	VBLENDPD__0x03_Y3_Y1_Y7; \
-\
-	LEAQ (CO1)(LDC*2), AX; \
-\
-	VADDPD__CO1_Y4_Y4;       \
-	VADDPD__CO1_LDC__Y5_Y5;  \
-	VADDPD__AX_Y6_Y6;      \
-	VADDPD__AX_LDC__Y7_Y7; \
-\
-	VMOVUPS__Y4_CO1;       \
-	VMOVUPS__Y5_CO1_LDC;  \
-	VMOVUPS__Y6_AX;      \
-	VMOVUPS__Y7_AX_LDC; \
-\
-	PREFETCHT0 32(CO1);       \
-\
-	VPERMPD__0xb1_Y9_Y9;   \
-	VPERMPD__0xb1_Y11_Y11; \
-\
-	VBLENDPD__0x0a_Y9_Y8_Y0;   \
-	VBLENDPD__0x05_Y9_Y8_Y1;   \
-	VBLENDPD__0x0a_Y11_Y10_Y2; \
-	VBLENDPD__0x05_Y11_Y10_Y3; \
-	PREFETCHT0 32(CO1)(LDC*1);  \
-\
-	VPERMPD__0x1b_Y2_Y2; \
-	VPERMPD__0x1b_Y3_Y3; \
-	VPERMPD__0xb1_Y2_Y2; \
-	VPERMPD__0xb1_Y3_Y3; \
-	PREFETCHT0 32(AX);      \
-\
-	VBLENDPD__0x03_Y0_Y2_Y4; \
-	VBLENDPD__0x03_Y1_Y3_Y5; \
-	VBLENDPD__0x03_Y2_Y0_Y6; \
-	VBLENDPD__0x03_Y3_Y1_Y7; \
-	PREFETCHT0 32(AX)(LDC*1); \
-\
-	LEAQ (AX)(LDC*2), AX; \
-	LEAQ (AX)(LDC*2), BP; \
-\
-	VADDPD__AX_Y4_Y4;      \
-	VADDPD__AX_LDC__Y5_Y5; \
-	VADDPD__BP_Y6_Y6;      \
-	VADDPD__BP_LDC__Y7_Y7; \
-\
-	VMOVUPS__Y4_AX;      \
-	VMOVUPS__Y5_AX_LDC; \
-	VMOVUPS__Y6_BP;      \
-	VMOVUPS__Y7_BP_LDC; \
-\
-	PREFETCHT0 32(AX);      \
-\
-	VPERMPD__0xb1_Y13_Y13; \
-	VPERMPD__0xb1_Y15_Y15; \
-\
-	VBLENDPD__0x0a_Y13_Y12_Y0; \
-	VBLENDPD__0x05_Y13_Y12_Y1; \
-	VBLENDPD__0x0a_Y15_Y14_Y2; \
-	VBLENDPD__0x05_Y15_Y14_Y3; \
-	PREFETCHT0 32(AX)(LDC*1); \
-\
-	VPERMPD__0x1b_Y2_Y2; \
-	VPERMPD__0x1b_Y3_Y3; \
-	VPERMPD__0xb1_Y2_Y2; \
-	VPERMPD__0xb1_Y3_Y3; \
-	PREFETCHT0 32(BP);      \
-\
-	VBLENDPD__0x03_Y0_Y2_Y4; \
-	VBLENDPD__0x03_Y1_Y3_Y5; \
-	VBLENDPD__0x03_Y2_Y0_Y6; \
-	VBLENDPD__0x03_Y3_Y1_Y7; \
-	PREFETCHT0 32(BP)(LDC*1); \
-\
-	LEAQ (AX)(LDC*4), AX; \
-	LEAQ (BP)(LDC*4), BP; \
-\
-	VADDPD__AX_Y4_Y4;      \
-	VADDPD__AX_LDC__Y5_Y5; \
-	VADDPD__BP_Y6_Y6;      \
-	VADDPD__BP_LDC__Y7_Y7; \
-\
-	VMOVUPS__Y4_AX;      \
-	VMOVUPS__Y5_AX_LDC; \
-	VMOVUPS__Y6_BP;      \
-	VMOVUPS__Y7_BP_LDC; \
-\
-	PREFETCHT0 32(AX);      \
-	PREFETCHT0 32(AX)(LDC*1); \
-	PREFETCHT0 32(BP);      \
-	PREFETCHT0 32(BP)(LDC*1); \
-\
-	ADDQ $ 4*SIZE, CO1
+	VBROADCASTSD__ALPHA_Y0;      \
+	                             \
+	VUNPCKLPD_Y4_Y5_Y2;          \
+	VUNPCKHPD_Y5_Y4_Y3;          \
+	VUNPCKLPD_Y6_Y7_Y4;          \
+	VUNPCKHPD_Y7_Y6_Y5;          \
+	                             \
+	VPERM2F128_0x31_Y4_Y2_Y6;    \
+	VPERM2F128_0x31_Y5_Y3_Y7;    \
+	VPERM2F128_0x20_Y2_Y4_Y4;    \
+	VPERM2F128_0x20_Y3_Y5_Y5;    \
+	                             \
+	LEAQ       (CO1)(LDC*2), AX; \
+	                             \
+	VFMADD213PD_CO1__Y0_Y4;      \
+	VFMADD213PD_CO1_LDC__Y0_Y5;  \
+	VFMADD213PD_AX__Y0_Y6;       \
+	VFMADD213PD_AX_LDC__Y0_Y7;   \
+	                             \
+	VMOVUPS__Y4_CO1;             \
+	VMOVUPS__Y5_CO1_LDC;         \
+	VMOVUPS__Y6_AX;              \
+	VMOVUPS__Y7_AX_LDC;          \
+	                             \
+	PREFETCHT0 32(CO1);          \
+	                             \
+	VUNPCKLPD_Y8_Y9_Y2;          \
+	VUNPCKHPD_Y9_Y8_Y3;          \
+	VUNPCKLPD_Y10_Y11_Y4;        \
+	VUNPCKHPD_Y11_Y10_Y5;        \
+	                             \
+	VPERM2F128_0x31_Y4_Y2_Y6;    \
+	VPERM2F128_0x31_Y5_Y3_Y7;    \
+	VPERM2F128_0x20_Y2_Y4_Y4;    \
+	VPERM2F128_0x20_Y3_Y5_Y5;    \
+	                             \
+	PREFETCHT0 32(AX)(LDC*1);    \
+	                             \
+	LEAQ       (AX)(LDC*2), AX;  \
+	LEAQ       (AX)(LDC*2), BP;  \
+	                             \
+	VFMADD213PD_AX__Y0_Y4;       \
+	VFMADD213PD_AX_LDC__Y0_Y5;   \
+	VFMADD213PD_BP__Y0_Y6;       \
+	VFMADD213PD_BP_LDC__Y0_Y7;   \
+	                             \
+	VMOVUPS__Y4_AX;              \
+	VMOVUPS__Y5_AX_LDC;          \
+	VMOVUPS__Y6_BP;              \
+	VMOVUPS__Y7_BP_LDC;          \
+	                             \
+	PREFETCHT0 32(AX);           \
+	                             \
+	VUNPCKLPD_Y12_Y13_Y2;        \
+	VUNPCKHPD_Y13_Y12_Y3;        \
+	VUNPCKLPD_Y14_Y15_Y4;        \
+	VUNPCKHPD_Y15_Y14_Y5;        \
+	                             \
+	VPERM2F128_0x31_Y4_Y2_Y6;    \
+	VPERM2F128_0x31_Y5_Y3_Y7;    \
+	VPERM2F128_0x20_Y2_Y4_Y4;    \
+	VPERM2F128_0x20_Y3_Y5_Y5;    \
+	                             \
+	PREFETCHT0 32(BP)(LDC*1);    \
+	                             \
+	LEAQ       (AX)(LDC*4), AX;  \
+	LEAQ       (BP)(LDC*4), BP;  \
+	                             \
+	VFMADD213PD_AX__Y0_Y4;       \
+	VFMADD213PD_AX_LDC__Y0_Y5;   \
+	VFMADD213PD_BP__Y0_Y6;       \
+	VFMADD213PD_BP_LDC__Y0_Y7;   \
+	                             \
+	VMOVUPS__Y4_AX;              \
+	VMOVUPS__Y5_AX_LDC;          \
+	VMOVUPS__Y6_BP;              \
+	VMOVUPS__Y7_BP_LDC;          \
+	                             \
+	PREFETCHT0 32(AX);           \
+	PREFETCHT0 32(AX)(LDC*1);    \
+	PREFETCHT0 32(BP);           \
+	PREFETCHT0 32(BP)(LDC*1);    \
+	                             \
+	ADDQ       $ 4*SIZE, CO1
 
 // ****************************************************************************************
 
@@ -287,90 +246,75 @@
 	VXORPD X15, X15, X15
 
 #define KERNEL2x12_SUB \
-	VMOVUPS__n16_BO__X0; \
-	VMOVDDUP__n12_BO__X1; \
-	VMOVDDUP__n11_BO__X2; \
-	VMOVDDUP__n10_BO__X3; \
-	VFMADD231PD__X0_X1_X4;         \
-	VMOVDDUP__n9_BO__X1;  \
-	VFMADD231PD__X0_X2_X5;         \
-	VMOVDDUP__n8_BO__X2;  \
-	VFMADD231PD__X0_X3_X6;         \
-	VMOVDDUP__n7_BO__X3;  \
-	VFMADD231PD__X0_X1_X7;         \
-	VMOVDDUP__n6_BO__X1;  \
-	VFMADD231PD__X0_X2_X8;         \
-	VMOVDDUP__n5_BO__X2;  \
-	VFMADD231PD__X0_X3_X9;         \
-	VMOVDDUP__n4_BO__X3;  \
-	VFMADD231PD__X0_X1_X10;        \
-	VMOVDDUP__n3_BO__X1;  \
-	VFMADD231PD__X0_X2_X11;        \
-	VMOVDDUP__n2_BO__X2;  \
-	VFMADD231PD__X0_X3_X12;        \
-	VMOVDDUP__n1_BO__X3;  \
-	VFMADD231PD__X0_X1_X13;        \
-	ADDQ        $ 12*SIZE, AO;      \
-	VFMADD231PD__X0_X2_X14;        \
-	ADDQ        $ 2*SIZE, BO;       \
+	VMOVUPS__n16_BO__X0;    \
+	VMOVDDUP__n12_BO__X1;   \
+	VMOVDDUP__n11_BO__X2;   \
+	VMOVDDUP__n10_BO__X3;   \
+	VFMADD231PD__X0_X1_X4;  \
+	VMOVDDUP__n9_BO__X1;    \
+	VFMADD231PD__X0_X2_X5;  \
+	VMOVDDUP__n8_BO__X2;    \
+	VFMADD231PD__X0_X3_X6;  \
+	VMOVDDUP__n7_BO__X3;    \
+	VFMADD231PD__X0_X1_X7;  \
+	VMOVDDUP__n6_BO__X1;    \
+	VFMADD231PD__X0_X2_X8;  \
+	VMOVDDUP__n5_BO__X2;    \
+	VFMADD231PD__X0_X3_X9;  \
+	VMOVDDUP__n4_BO__X3;    \
+	VFMADD231PD__X0_X1_X10; \
+	VMOVDDUP__n3_BO__X1;    \
+	VFMADD231PD__X0_X2_X11; \
+	VMOVDDUP__n2_BO__X2;    \
+	VFMADD231PD__X0_X3_X12; \
+	VMOVDDUP__n1_BO__X3;    \
+	VFMADD231PD__X0_X1_X13; \
+	ADDQ $ 12*SIZE, AO;     \
+	VFMADD231PD__X0_X2_X14; \
+	ADDQ $ 2*SIZE, BO;      \
 	VFMADD231PD__X0_X3_X15
 
 #define SAVE2x12 \
-	VMOVDDUP__ALPHA_X0; \
-\
-	VMULPD__X0_X4_X4; \
-	VMULPD__X0_X5_X5; \
-	VMULPD__X0_X6_X6; \
-	VMULPD__X0_X7_X7; \
-\
-	VMULPD__X0_X8_X8;   \
-	VMULPD__X0_X9_X9;   \
-	VMULPD__X0_X10_X10; \
-	VMULPD__X0_X11_X11; \
-\
-	VMULPD__X0_X12_X12; \
-	VMULPD__X0_X13_X13; \
-	VMULPD__X0_X14_X14; \
-	VMULPD__X0_X15_X15; \
-\
-	LEAQ (CO1)(LDC*2), AX; \
-\
-	VADDPD__CO1_X4_X4;       \
-	VADDPD__CO1_LDC__X5_X5;  \
-	VADDPD__AX_X6_X6;      \
-	VADDPD__AX_LDC__X7_X7; \
-\
-	VMOVUPS__X4_CO1;       \
-	VMOVUPS__X5_CO1_LDC;  \
-	VMOVUPS__X6_AX;      \
-	VMOVUPS__X7_AX_LDC; \
-\
-	LEAQ (AX)(LDC*2), AX; \
-	LEAQ (AX)(LDC*2), BP; \
-\
-	VADDPD__AX_X8_X4;       \
-	VADDPD__AX_LDC__X9_X5;  \
-	VADDPD__BP_X10_X6;      \
-	VADDPD__BP_LDC__X11_X7; \
-\
-	VMOVUPS__X4_AX;      \
-	VMOVUPS__X5_AX_LDC; \
-	VMOVUPS__X6_BP;      \
-	VMOVUPS__X7_BP_LDC; \
-\
-	LEAQ (AX)(LDC*4), AX; \
-	LEAQ (BP)(LDC*4), BP; \
-\
-	VADDPD__AX_X12_X4;      \
-	VADDPD__AX_LDC__X13_X5; \
-	VADDPD__BP_X14_X6;      \
-	VADDPD__BP_LDC__X15_X7; \
-\
-	VMOVUPS__X4_AX;      \
-	VMOVUPS__X5_AX_LDC; \
-	VMOVUPS__X6_BP;      \
-	VMOVUPS__X7_BP_LDC; \
-\
+	VMOVDDUP__ALPHA_X0;         \
+	                            \
+	LEAQ (CO1)(LDC*2), AX;      \
+	                            \
+	VFMADD213PD_CO1__X0_X4;     \
+	VFMADD213PD_CO1_LDC__X0_X5; \
+	VFMADD213PD_AX__X0_X6;      \
+	VFMADD213PD_AX_LDC__X0_X7;  \
+	                            \
+	VMOVUPS__X4_CO1;            \
+	VMOVUPS__X5_CO1_LDC;        \
+	VMOVUPS__X6_AX;             \
+	VMOVUPS__X7_AX_LDC;         \
+	                            \
+	LEAQ (AX)(LDC*2), AX;       \
+	LEAQ (AX)(LDC*2), BP;       \
+	                            \
+	VFMADD213PD_AX__X0_X8;      \
+	VFMADD213PD_AX_LDC__X0_X9;  \
+	VFMADD213PD_BP__X0_X10;     \
+	VFMADD213PD_BP_LDC__X0_X11; \
+	                            \
+	VMOVUPS__X8_AX;             \
+	VMOVUPS__X9_AX_LDC;         \
+	VMOVUPS__X10_BP;            \
+	VMOVUPS__X11_BP_LDC;        \
+	                            \
+	LEAQ (AX)(LDC*4), AX;       \
+	LEAQ (BP)(LDC*4), BP;       \
+	                            \
+	VFMADD213PD_AX__X0_X12;     \
+	VFMADD213PD_AX_LDC__X0_X13; \
+	VFMADD213PD_BP__X0_X14;     \
+	VFMADD213PD_BP_LDC__X0_X15; \
+	                            \
+	VMOVUPS__X12_AX;            \
+	VMOVUPS__X13_AX_LDC;        \
+	VMOVUPS__X14_BP;            \
+	VMOVUPS__X15_BP_LDC;        \
+	                            \
 	ADDQ $ 2*SIZE, CO1
 
 // ****************************************************************************************
@@ -390,91 +334,76 @@
 	VXORPD X15, X15, X15
 
 #define KERNEL1x12_SUB \
-	VMOVSD      -16 * SIZE(BO), X0; \
-	VMOVSD      -12 * SIZE(AO), X1; \
-	VMOVSD      -11 * SIZE(AO), X2; \
-	VMOVSD      -10 * SIZE(AO), X3; \
-	VFMADD231SD__X0_X1_X4;         \
-	VMOVSD      -9 * SIZE(AO), X1;  \
-	VFMADD231SD__X0_X2_X5;         \
-	VMOVSD      -8 * SIZE(AO), X2;  \
-	VFMADD231SD__X0_X3_X6;         \
-	VMOVSD      -7 * SIZE(AO), X3;  \
-	VFMADD231SD__X0_X1_X7;         \
-	VMOVSD      -6 * SIZE(AO), X1;  \
-	VFMADD231SD__X0_X2_X8;         \
-	VMOVSD      -5 * SIZE(AO), X2;  \
-	VFMADD231SD__X0_X3_X9;         \
-	VMOVSD      -4 * SIZE(AO), X3;  \
-	VFMADD231SD__X0_X1_X10;        \
-	VMOVSD      -3 * SIZE(AO), X1;  \
-	VFMADD231SD__X0_X2_X11;        \
-	VMOVSD      -2 * SIZE(AO), X2;  \
-	VFMADD231SD__X0_X3_X12;        \
-	VMOVSD      -1 * SIZE(AO), X3;  \
-	VFMADD231SD__X0_X1_X13;        \
-	ADDQ        $ 12*SIZE, AO;      \
-	VFMADD231SD__X0_X2_X14;        \
-	ADDQ        $ 1*SIZE, BO;       \
+	VMOVSD -16 * SIZE(BO), X0; \
+	VMOVSD -12 * SIZE(AO), X1; \
+	VMOVSD -11 * SIZE(AO), X2; \
+	VMOVSD -10 * SIZE(AO), X3; \
+	VFMADD231SD__X0_X1_X4;     \
+	VMOVSD -9 * SIZE(AO), X1;  \
+	VFMADD231SD__X0_X2_X5;     \
+	VMOVSD -8 * SIZE(AO), X2;  \
+	VFMADD231SD__X0_X3_X6;     \
+	VMOVSD -7 * SIZE(AO), X3;  \
+	VFMADD231SD__X0_X1_X7;     \
+	VMOVSD -6 * SIZE(AO), X1;  \
+	VFMADD231SD__X0_X2_X8;     \
+	VMOVSD -5 * SIZE(AO), X2;  \
+	VFMADD231SD__X0_X3_X9;     \
+	VMOVSD -4 * SIZE(AO), X3;  \
+	VFMADD231SD__X0_X1_X10;    \
+	VMOVSD -3 * SIZE(AO), X1;  \
+	VFMADD231SD__X0_X2_X11;    \
+	VMOVSD -2 * SIZE(AO), X2;  \
+	VFMADD231SD__X0_X3_X12;    \
+	VMOVSD -1 * SIZE(AO), X3;  \
+	VFMADD231SD__X0_X1_X13;    \
+	ADDQ   $ 12*SIZE, AO;      \
+	VFMADD231SD__X0_X2_X14;    \
+	ADDQ   $ 1*SIZE, BO;       \
 	VFMADD231SD__X0_X3_X15
 
 #define SAVE1x12 \
-	VMOVSD ALPHA, X0; \
-\
-	VMULSD__X0_X4_X4; \
-	VMULSD__X0_X5_X5; \
-	VMULSD__X0_X6_X6; \
-	VMULSD__X0_X7_X7; \
-\
-	VMULSD__X0_X8_X8;   \
-	VMULSD__X0_X9_X9;   \
-	VMULSD__X0_X10_X10; \
-	VMULSD__X0_X11_X11; \
-\
-	VMULSD__X0_X12_X12; \
-	VMULSD__X0_X13_X13; \
-	VMULSD__X0_X14_X14; \
-	VMULSD__X0_X15_X15; \
-\
-	LEAQ (CO1)(LDC*2), AX; \
-\
-	VADDSD__CO1_X4_X4;       \
-	VADDSD__CO1_LDC__X5_X5;  \
-	VADDSD__AX_X6_X6;      \
-	VADDSD__AX_LDC__X7_X7; \
-\
-	VMOVSD X4, (CO1);       \
-	VMOVSD X5, (CO1)(LDC*1);  \
-	VMOVSD X6, (AX);      \
-	VMOVSD X7, (AX)(LDC*1); \
-\
-	LEAQ (AX)(LDC*2), AX; \
-	LEAQ (AX)(LDC*2), BP; \
-\
-	VADDSD__AX_X8_X4;       \
-	VADDSD__AX_LDC__X9_X5;  \
-	VADDSD__BP_X10_X6;      \
-	VADDSD__BP_LDC__X11_X7; \
-\
-	VMOVSD X4, (AX);      \
-	VMOVSD X5, (AX)(LDC*1); \
-	VMOVSD X6, (BP);      \
-	VMOVSD X7, (BP)(LDC*1); \
-\
-	LEAQ (AX)(LDC*4), AX; \
-	LEAQ (BP)(LDC*4), BP; \
-\
-	VADDSD__AX_X12_X4;      \
-	VADDSD__AX_LDC__X13_X5; \
-	VADDSD__BP_X14_X6;      \
-	VADDSD__BP_LDC__X15_X7; \
-\
-	VMOVSD X4, (AX);      \
-	VMOVSD X5, (AX)(LDC*1); \
-	VMOVSD X6, (BP);      \
-	VMOVSD X7, (BP)(LDC*1); \
-\
-	ADDQ $ 1*SIZE, CO1
+	VMOVSD ALPHA, X0;           \
+	                            \
+	LEAQ   (CO1)(LDC*2), AX;    \
+	                            \
+	VFMADD213SD_CO1__X0_X4;     \
+	VFMADD213SD_CO1_LDC__X0_X5; \
+	VFMADD213SD_AX__X0_X6;      \
+	VFMADD213SD_AX_LDC__X0_X7;  \
+	                            \
+	VMOVSD X4, (CO1);           \
+	VMOVSD X5, (CO1)(LDC*1);    \
+	VMOVSD X6, (AX);            \
+	VMOVSD X7, (AX)(LDC*1);     \
+	                            \
+	LEAQ   (AX)(LDC*2), AX;     \
+	LEAQ   (AX)(LDC*2), BP;     \
+	                            \
+	VFMADD213SD_AX__X0_X8;      \
+	VFMADD213SD_AX_LDC__X0_X9;  \
+	VFMADD213SD_BP__X0_X10;     \
+	VFMADD213SD_BP_LDC__X0_X11; \
+	                            \
+	VMOVSD X8, (AX);            \
+	VMOVSD X9, (AX)(LDC*1);     \
+	VMOVSD X10, (BP);           \
+	VMOVSD X11, (BP)(LDC*1);    \
+	                            \
+	LEAQ   (AX)(LDC*4), AX;     \
+	LEAQ   (BP)(LDC*4), BP;     \
+	                            \
+	VFMADD213SD_AX__X0_X12;     \
+	VFMADD213SD_AX_LDC__X0_X13; \
+	VFMADD213SD_BP__X0_X14;     \
+	VFMADD213SD_BP_LDC__X0_X15; \
+	                            \
+	VMOVSD X12, (AX);           \
+	VMOVSD X13, (AX)(LDC*1);    \
+	VMOVSD X14, (BP);           \
+	VMOVSD X15, (BP)(LDC*1);    \
+	                            \
+	ADDQ   $ 1*SIZE, CO1
 
 // ****************************************************************************************
 // ****************************************************************************************
@@ -486,111 +415,98 @@
 	VXORPD Y7, Y7, Y7
 
 #define KERNEL4x4_I \
-	PREFETCHT0 A_PR1(BO);          \
-	VMOVUPS__n12_AO__Y1; \
-	VMOVUPS__n16_BO__Y0; \
-	VMULPD__Y0_Y1_Y4;         \
+	PREFETCHT0 A_PR1(BO);    \
+	VMOVUPS__n12_AO__Y1;     \
+	VMOVUPS__n16_BO__Y0;     \
+	VMULPD__Y0_Y1_Y4;        \
 	VPERMPD__0xb1_Y0_Y0;     \
-	VMULPD__Y0_Y1_Y5;         \
+	VMULPD__Y0_Y1_Y5;        \
 	VPERMPD__0x1b_Y0_Y0;     \
-	VMULPD__Y0_Y1_Y6;         \
-\
-	ADDQ    $ 4*SIZE, AO;       \
+	VMULPD__Y0_Y1_Y6;        \
+	                         \
+	ADDQ       $ 4*SIZE, AO; \
 	VPERMPD__0xb1_Y0_Y0;     \
-	VMULPD__Y0_Y1_Y7;         \
+	VMULPD__Y0_Y1_Y7;        \
 	VMOVUPS__n12_AO__Y1
 
 #define KERNEL4x4_M1 \
-	PREFETCHT0  A_PR1(BO);          \
-	VMOVUPS__n16_BO__Y0; \
-	VFMADD231PD__Y0_Y1_Y4;         \
-	VPERMPD__0xb1_Y0_Y0;     \
-	VFMADD231PD__Y0_Y1_Y5;         \
-	VPERMPD__0x1b_Y0_Y0;     \
-	VFMADD231PD__Y0_Y1_Y6;         \
-\
-	VPERMPD__0xb1_Y0_Y0;     \
-	VFMADD231PD__Y0_Y1_Y7;         \
+	PREFETCHT0 A_PR1(BO);  \
+	VMOVUPS__n16_BO__Y0;   \
+	VFMADD231PD__Y0_Y1_Y4; \
+	VPERMPD__0xb1_Y0_Y0;   \
+	VFMADD231PD__Y0_Y1_Y5; \
+	VPERMPD__0x1b_Y0_Y0;   \
+	VFMADD231PD__Y0_Y1_Y6; \
+	                       \
+	VPERMPD__0xb1_Y0_Y0;   \
+	VFMADD231PD__Y0_Y1_Y7; \
 	VMOVUPS__n12_AO__Y1
 
 #define KERNEL4x4_M2 \
-	VMOVUPS__n12_BO__Y0; \
-	VFMADD231PD__Y0_Y1_Y4;         \
-	VPERMPD__0xb1_Y0_Y0;     \
-	VFMADD231PD__Y0_Y1_Y5;         \
-	VPERMPD__0x1b_Y0_Y0;     \
-	VFMADD231PD__Y0_Y1_Y6;         \
-\
-	ADDQ        $ 8*SIZE, BO;      \
-	VPERMPD__0xb1_Y0_Y0;    \
-	VFMADD231PD__Y0_Y1_Y7;        \
-	VMOVUPS__n8_AO__Y1; \
-	ADDQ        $ 8*SIZE, AO
+	VMOVUPS__n12_BO__Y0;   \
+	VFMADD231PD__Y0_Y1_Y4; \
+	VPERMPD__0xb1_Y0_Y0;   \
+	VFMADD231PD__Y0_Y1_Y5; \
+	VPERMPD__0x1b_Y0_Y0;   \
+	VFMADD231PD__Y0_Y1_Y6; \
+	                       \
+	ADDQ $ 8*SIZE, BO;     \
+	VPERMPD__0xb1_Y0_Y0;   \
+	VFMADD231PD__Y0_Y1_Y7; \
+	VMOVUPS__n8_AO__Y1;    \
+	ADDQ $ 8*SIZE, AO
 
 #define KERNEL4x4_E \
-	VMOVUPS__n12_BO__Y0; \
-	VFMADD231PD__Y0_Y1_Y4;         \
-	VPERMPD__0xb1_Y0_Y0;     \
-	VFMADD231PD__Y0_Y1_Y5;         \
-	VPERMPD__0x1b_Y0_Y0;     \
-	VFMADD231PD__Y0_Y1_Y6;         \
-\
-	ADDQ        $ 8*SIZE, BO;   \
-	VPERMPD__0xb1_Y0_Y0; \
-	VFMADD231PD__Y0_Y1_Y7;     \
-	ADDQ        $ 4*SIZE, AO
+	VMOVUPS__n12_BO__Y0;   \
+	VFMADD231PD__Y0_Y1_Y4; \
+	VPERMPD__0xb1_Y0_Y0;   \
+	VFMADD231PD__Y0_Y1_Y5; \
+	VPERMPD__0x1b_Y0_Y0;   \
+	VFMADD231PD__Y0_Y1_Y6; \
+	                       \
+	ADDQ $ 8*SIZE, BO;     \
+	VPERMPD__0xb1_Y0_Y0;   \
+	VFMADD231PD__Y0_Y1_Y7; \
+	ADDQ $ 4*SIZE, AO
 
 #define KERNEL4x4_SUB \
-	VMOVUPS__n12_AO__Y1; \
-	VMOVUPS__n16_BO__Y0; \
-	VFMADD231PD__Y0_Y1_Y4;         \
-	VPERMPD__0xb1_Y0_Y0;     \
-	VFMADD231PD__Y0_Y1_Y5;         \
-	ADDQ        $ 4*SIZE, AO;       \
-	VPERMPD__0x1b_Y0_Y0;     \
-	VFMADD231PD__Y0_Y1_Y6;         \
-	ADDQ        $ 4*SIZE, BO;       \
-	VPERMPD__0xb1_Y0_Y0;     \
+	VMOVUPS__n12_AO__Y1;   \
+	VMOVUPS__n16_BO__Y0;   \
+	VFMADD231PD__Y0_Y1_Y4; \
+	VPERMPD__0xb1_Y0_Y0;   \
+	VFMADD231PD__Y0_Y1_Y5; \
+	ADDQ $ 4*SIZE, AO;     \
+	VPERMPD__0x1b_Y0_Y0;   \
+	VFMADD231PD__Y0_Y1_Y6; \
+	ADDQ $ 4*SIZE, BO;     \
+	VPERMPD__0xb1_Y0_Y0;   \
 	VFMADD231PD__Y0_Y1_Y7
 
 #define SAVE4x4 \
-	VBROADCASTSD__ALPHA_Y0; \
-\
-	VMULPD__Y0_Y4_Y4; \
-	VMULPD__Y0_Y7_Y7; \
-	VMULPD__Y0_Y5_Y5; \
-	VMULPD__Y0_Y6_Y6; \
-\
-	VPERMPD__0xb1_Y5_Y5; \
-	VPERMPD__0xb1_Y7_Y7; \
-\
-	VBLENDPD__0x0a_Y5_Y4_Y0; \
-	VBLENDPD__0x05_Y5_Y4_Y1; \
-	VBLENDPD__0x0a_Y7_Y6_Y2; \
-	VBLENDPD__0x05_Y7_Y6_Y3; \
-\
-	VPERMPD__0x1b_Y2_Y2; \
-	VPERMPD__0x1b_Y3_Y3; \
-	VPERMPD__0xb1_Y2_Y2; \
-	VPERMPD__0xb1_Y3_Y3; \
-\
-	VBLENDPD__0x03_Y0_Y2_Y4; \
-	VBLENDPD__0x03_Y1_Y3_Y5; \
-	VBLENDPD__0x03_Y2_Y0_Y6; \
-	VBLENDPD__0x03_Y3_Y1_Y7; \
-\
-	LEAQ (CO1)(LDC*2), AX; \
-\
-	VADDPD__CO1_Y4_Y4;       \
-	VADDPD__CO1_LDC__Y5_Y5;  \
-	VADDPD__AX_Y6_Y6;      \
-	VADDPD__AX_LDC__Y7_Y7; \
-\
-	VMOVUPS__Y4_CO1;       \
-	VMOVUPS__Y5_CO1_LDC;  \
-	VMOVUPS__Y6_AX;      \
-	VMOVUPS__Y7_AX_LDC; \
-\
+	VBROADCASTSD__ALPHA_Y0;     \
+	                            \
+	VUNPCKLPD_Y4_Y5_Y2;         \
+	VUNPCKHPD_Y5_Y4_Y3;         \
+	VUNPCKLPD_Y6_Y7_Y4;         \
+	VUNPCKHPD_Y7_Y6_Y5;         \
+	                            \
+	VPERM2F128_0x31_Y4_Y2_Y6;   \
+	VPERM2F128_0x31_Y5_Y3_Y7;   \
+	VPERM2F128_0x20_Y2_Y4_Y4;   \
+	VPERM2F128_0x20_Y3_Y5_Y5;   \
+	                            \
+	LEAQ (CO1)(LDC*2), AX;      \
+	                            \
+	VFMADD213PD_CO1__Y0_Y4;     \
+	VFMADD213PD_CO1_LDC__Y0_Y5; \
+	VFMADD213PD_AX__Y0_Y6;      \
+	VFMADD213PD_AX_LDC__Y0_Y7;  \
+	                            \
+	VMOVUPS__Y4_CO1;            \
+	VMOVUPS__Y5_CO1_LDC;        \
+	VMOVUPS__Y6_AX;             \
+	VMOVUPS__Y7_AX_LDC;         \
+	                            \
 	ADDQ $ 4*SIZE, CO1
 
 // ****************************************************************************************
@@ -603,38 +519,34 @@
 	VXORPD X7, X7, X7; \
 
 #define KERNEL2x4_SUB \
-	VMOVDDUP__n12_BO__X1; \
-	VMOVUPS__n16_BO__X0; \
-	VMOVDDUP__n11_BO__X2; \
-	VFMADD231PD__X0_X1_X4;         \
-	VMOVDDUP__n10_BO__X3; \
-	VFMADD231PD__X0_X2_X5;         \
-	VMOVDDUP__n9_BO__X8;  \
-	VFMADD231PD__X0_X3_X6;         \
-	ADDQ        $ 4*SIZE, AO;       \
-	VFMADD231PD__X0_X8_X7;         \
-	ADDQ        $ 2*SIZE, BO
+	VMOVDDUP__n12_BO__X1;  \
+	VMOVUPS__n16_BO__X0;   \
+	VMOVDDUP__n11_BO__X2;  \
+	VFMADD231PD__X0_X1_X4; \
+	VMOVDDUP__n10_BO__X3;  \
+	VFMADD231PD__X0_X2_X5; \
+	VMOVDDUP__n9_BO__X8;   \
+	VFMADD231PD__X0_X3_X6; \
+	ADDQ $ 4*SIZE, AO;     \
+	VFMADD231PD__X0_X8_X7; \
+	ADDQ $ 2*SIZE, BO
 
 #define SAVE2x4 \
-	VMOVDDUP__ALPHA_X0; \
-\
-	VMULPD__X0_X4_X4; \
-	VMULPD__X0_X5_X5; \
-	VMULPD__X0_X6_X6; \
-	VMULPD__X0_X7_X7; \
-\
-	LEAQ (CO1)(LDC*2), AX; \
-\
-	VADDPD__CO1_X4_X4;       \
-	VADDPD__CO1_LDC__X5_X5;  \
-	VADDPD__AX_X6_X6;      \
-	VADDPD__AX_LDC__X7_X7; \
-\
-	VMOVUPS__X4_CO1;       \
-	VMOVUPS__X5_CO1_LDC;  \
-	VMOVUPS__X6_AX;      \
-	VMOVUPS__X7_AX_LDC; \
-\
+	VMOVDDUP__ALPHA_X0;         \
+	                            \
+	LEAQ (CO1)(LDC*2), AX;      \
+	                            \
+	VFMADD213PD_CO1__X0_X4;     \
+	VFMADD213PD_CO1_LDC__X0_X5; \
+	VFMADD213PD_AX__X0_X6;      \
+	VFMADD213PD_AX_LDC__X0_X7;  \
+	                            \
+	VMOVUPS__X4_CO1;            \
+	VMOVUPS__X5_CO1_LDC;        \
+	VMOVUPS__X6_AX;             \
+	VMOVUPS__X7_AX_LDC;         \
+	VMOVUPS__X7_AX_LDC;         \
+	                            \
 	ADDQ $ 2*SIZE, CO1
 
 // ****************************************************************************************
@@ -647,39 +559,34 @@
 	VXORPD X7, X7, X7
 
 #define KERNEL1x4_SUB \
-	VMOVSD      -12 * SIZE(AO), X1; \
-	VMOVSD      -16 * SIZE(BO), X0; \
-	VMOVSD      -11 * SIZE(AO), X2; \
-	VFMADD231SD__X0_X1_X4;         \
-	VMOVSD      -10 * SIZE(AO), X3; \
-	VFMADD231SD__X0_X2_X5;         \
-	VMOVSD      -9 * SIZE(AO), X8;  \
-	VFMADD231SD__X0_X3_X6;         \
-	ADDQ        $ 4*SIZE, AO;       \
-	VFMADD231SD__X0_X8_X7;         \
-	ADDQ        $ 1*SIZE, BO
+	VMOVSD -12 * SIZE(AO), X1; \
+	VMOVSD -16 * SIZE(BO), X0; \
+	VMOVSD -11 * SIZE(AO), X2; \
+	VFMADD231SD__X0_X1_X4;     \
+	VMOVSD -10 * SIZE(AO), X3; \
+	VFMADD231SD__X0_X2_X5;     \
+	VMOVSD -9 * SIZE(AO), X8;  \
+	VFMADD231SD__X0_X3_X6;     \
+	ADDQ   $ 4*SIZE, AO;       \
+	VFMADD231SD__X0_X8_X7;     \
+	ADDQ   $ 1*SIZE, BO
 
 #define SAVE1x4 \
-	VMOVSD ALPHA, X0; \
-\
-	VMULSD__X0_X4_X4; \
-	VMULSD__X0_X5_X5; \
-	VMULSD__X0_X6_X6; \
-	VMULSD__X0_X7_X7; \
-\
-	LEAQ (CO1)(LDC*2), AX; \
-\
-	VADDSD__CO1_X4_X4;       \
-	VADDSD__CO1_LDC__X5_X5;  \
-	VADDSD__AX_X6_X6;      \
-	VADDSD__AX_LDC__X7_X7; \
-\
-	VMOVSD X4, (CO1);       \
-	VMOVSD X5, (CO1)(LDC*1);  \
-	VMOVSD X6, (AX);      \
-	VMOVSD X7, (AX)(LDC*1); \
-\
-	ADDQ $ 1*SIZE, CO1
+	VMOVSD ALPHA, X0;           \
+	                            \
+	LEAQ   (CO1)(LDC*2), AX;    \
+	                            \
+	VFMADD213SD_CO1__X0_X4;     \
+	VFMADD213SD_CO1_LDC__X0_X5; \
+	VFMADD213SD_AX__X0_X6;      \
+	VFMADD213SD_AX_LDC__X0_X7;  \
+	                            \
+	VMOVSD X4, (CO1);           \
+	VMOVSD X5, (CO1)(LDC*1);    \
+	VMOVSD X6, (AX);            \
+	VMOVSD X7, (AX)(LDC*1);     \
+	                            \
+	ADDQ   $ 1*SIZE, CO1
 
 // ****************************************************************************************
 // ****************************************************************************************
@@ -691,35 +598,30 @@
 	VXORPD X7, X7, X7
 
 #define KERNEL4x2_SUB \
-	VMOVDDUP__n12_BO__X2; \
-	VMOVUPS__n16_BO__X0; \
-	VMOVUPS__n14_BO__X1; \
-	VMOVDDUP__n11_BO__X3; \
-	VFMADD231PD__X0_X2_X4;         \
-	VFMADD231PD__X1_X2_X5;         \
-	VFMADD231PD__X0_X3_X6;         \
-	VFMADD231PD__X1_X3_X7;         \
-	ADDQ        $ 2*SIZE, AO;       \
-	ADDQ        $ 4*SIZE, BO
+	VMOVDDUP__n12_BO__X2;  \
+	VMOVUPS__n16_BO__X0;   \
+	VMOVUPS__n14_BO__X1;   \
+	VMOVDDUP__n11_BO__X3;  \
+	VFMADD231PD__X0_X2_X4; \
+	VFMADD231PD__X1_X2_X5; \
+	VFMADD231PD__X0_X3_X6; \
+	VFMADD231PD__X1_X3_X7; \
+	ADDQ $ 2*SIZE, AO;     \
+	ADDQ $ 4*SIZE, BO
 
 #define SAVE4x2 \
-	VMOVDDUP__ALPHA_X0; \
-\
-	VMULPD__X0_X4_X4; \
-	VMULPD__X0_X5_X5; \
-	VMULPD__X0_X6_X6; \
-	VMULPD__X0_X7_X7; \
-\
-	VADDPD__CO1_X4_X4;              \
-	VADDPD__2_CO1__X5_X5;      \
-	VADDPD__CO1_LDC__X6_X6;         \
-	VADDPD__2_CO1_LDC__X7_X7; \
-\
+	VMOVDDUP__ALPHA_X0;           \
+	                              \
+	VFMADD213PD_CO1__X0_X4;       \
+	VFMADD213PD_2_CO1__X0_X5;     \
+	VFMADD213PD_CO1_LDC__X0_X6;   \
+	VFMADD213PD_2_CO1_LDC__X0_X7; \
+	                              \
 	VMOVUPS__X4_CO1;              \
-	VMOVUPS__X5__2_CO1;      \
-	VMOVUPS__X6_CO1_LDC;         \
-	VMOVUPS__X7__2_CO1_LDC; \
-\
+	VMOVUPS__X5__2_CO1;           \
+	VMOVUPS__X6_CO1_LDC;          \
+	VMOVUPS__X7__2_CO1_LDC;       \
+	                              \
 	ADDQ $ 4*SIZE, CO1
 
 // ****************************************************************************************
@@ -730,26 +632,23 @@
 	VXORPD X6, X6, X6
 
 #define KERNEL2x2_SUB \
-	VMOVDDUP__n12_BO__X2; \
-	VMOVUPS__n16_BO__X0; \
-	VMOVDDUP__n11_BO__X3; \
-	VFMADD231PD__X0_X2_X4;         \
-	VFMADD231PD__X0_X3_X6;         \
-	ADDQ        $ 2*SIZE, AO;       \
-	ADDQ        $ 2*SIZE, BO
+	VMOVDDUP__n12_BO__X2;  \
+	VMOVUPS__n16_BO__X0;   \
+	VMOVDDUP__n11_BO__X3;  \
+	VFMADD231PD__X0_X2_X4; \
+	VFMADD231PD__X0_X3_X6; \
+	ADDQ $ 2*SIZE, AO;     \
+	ADDQ $ 2*SIZE, BO
 
 #define SAVE2x2 \
-	VMOVDDUP__ALPHA_X0; \
-\
-	VMULPD__X0_X4_X4; \
-	VMULPD__X0_X6_X6; \
-\
-	VADDPD__CO1_X4_X4;      \
-	VADDPD__CO1_LDC__X6_X6; \
-\
-	VMOVUPS__X4_CO1;      \
-	VMOVUPS__X6_CO1_LDC; \
-\
+	VMOVDDUP__ALPHA_X0;         \
+	                            \
+	VFMADD213PD_CO1__X0_X4;     \
+	VFMADD213PD_CO1_LDC__X0_X6; \
+	                            \
+	VMOVUPS__X4_CO1;            \
+	VMOVUPS__X6_CO1_LDC;        \
+	                            \
 	ADDQ $ 2*SIZE, CO1
 
 // ****************************************************************************************
@@ -760,27 +659,24 @@
 	VXORPD X5, X5, X5
 
 #define KERNEL1x2_SUB \
-	VMOVSD      -12 * SIZE(AO), X1; \
-	VMOVSD      -16 * SIZE(BO), X0; \
-	VMOVSD      -11 * SIZE(AO), X2; \
-	VFMADD231SD__X0_X1_X4;         \
-	VFMADD231SD__X0_X2_X5;         \
-	ADDQ        $ 2*SIZE, AO;       \
-	ADDQ        $ 1*SIZE, BO
+	VMOVSD -12 * SIZE(AO), X1; \
+	VMOVSD -16 * SIZE(BO), X0; \
+	VMOVSD -11 * SIZE(AO), X2; \
+	VFMADD231SD__X0_X1_X4;     \
+	VFMADD231SD__X0_X2_X5;     \
+	ADDQ   $ 2*SIZE, AO;       \
+	ADDQ   $ 1*SIZE, BO
 
 #define SAVE1x2 \
-	VMOVSD ALPHA, X0; \
-\
-	VMULSD__X0_X4_X4; \
-	VMULSD__X0_X5_X5; \
-\
-	VADDSD__CO1_X4_X4;      \
-	VADDSD__CO1_LDC__X5_X5; \
-\
-	VMOVSD X4, (CO1);      \
-	VMOVSD X5, (CO1)(LDC*1); \
-\
-	ADDQ $ 1*SIZE, CO1
+	VMOVSD ALPHA, X0;           \
+	                            \
+	VFMADD213SD_CO1__X0_X4;     \
+	VFMADD213SD_CO1_LDC__X0_X5; \
+	                            \
+	VMOVSD X4, (CO1);           \
+	VMOVSD X5, (CO1)(LDC*1);    \
+	                            \
+	ADDQ   $ 1*SIZE, CO1
 
 // ****************************************************************************************
 // ****************************************************************************************
@@ -792,51 +688,49 @@
 	VXORPD Y7, Y7, Y7
 
 #define KERNEL4x1 \
-	VBROADCASTSD__n12_BO__Y0; \
-	VBROADCASTSD__n11_BO__Y1; \
-	VBROADCASTSD__n10_BO__Y2; \
-	VBROADCASTSD__n9_BO__Y3; \
-\
+	VBROADCASTSD__n12_BO__Y0;   \
+	VBROADCASTSD__n11_BO__Y1;   \
+	VBROADCASTSD__n10_BO__Y2;   \
+	VBROADCASTSD__n9_BO__Y3;    \
+	                            \
 	VFMADD231PD__n16_AO__Y0_Y4; \
 	VFMADD231PD__n12_AO__Y1_Y5; \
-\
-	VBROADCASTSD__n8_BO__Y0; \
-	VBROADCASTSD__n7_BO__Y1; \
-\
-	VFMADD231PD__n8_AO__Y2_Y6; \
-	VFMADD231PD__n4_AO__Y3_Y7; \
-\
-	VBROADCASTSD__n6_BO__Y2; \
-	VBROADCASTSD__n5_BO__Y3; \
-\
-	VFMADD231PD__0_AO__Y0_Y4; \
-	VFMADD231PD__4_AO__Y1_Y5; \
-	VFMADD231PD__8_AO__Y2_Y6; \
-	VFMADD231PD__12_AO__Y3_Y7; \
-\
-	ADDQ $ 8 *SIZE, AO; \
+	                            \
+	VBROADCASTSD__n8_BO__Y0;    \
+	VBROADCASTSD__n7_BO__Y1;    \
+	                            \
+	VFMADD231PD__n8_AO__Y2_Y6;  \
+	VFMADD231PD__n4_AO__Y3_Y7;  \
+	                            \
+	VBROADCASTSD__n6_BO__Y2;    \
+	VBROADCASTSD__n5_BO__Y3;    \
+	                            \
+	VFMADD231PD__0_AO__Y0_Y4;   \
+	VFMADD231PD__4_AO__Y1_Y5;   \
+	VFMADD231PD__8_AO__Y2_Y6;   \
+	VFMADD231PD__12_AO__Y3_Y7;  \
+	                            \
+	ADDQ $ 8 *SIZE, AO;         \
 	ADDQ $ 32*SIZE, BO
 
 #define KERNEL4x1_SUB \
 	VBROADCASTSD__n12_BO__Y2; \
-	VMOVUPS__n16_BO__Y0; \
-	VFMADD231PD__Y0_Y2_Y4;         \
-	ADDQ         $ 1*SIZE, AO;       \
-	ADDQ         $ 4*SIZE, BO
+	VMOVUPS__n16_BO__Y0;      \
+	VFMADD231PD__Y0_Y2_Y4;    \
+	ADDQ $ 1*SIZE, AO;        \
+	ADDQ $ 4*SIZE, BO
 
 #define SAVE4x1 \
 	VBROADCASTSD__ALPHA_Y0; \
-\
-	VADDPD__Y4_Y5_Y4; \
-	VADDPD__Y6_Y7_Y6; \
-	VADDPD__Y4_Y6_Y4; \
-\
-	VMULPD__Y0_Y4_Y4; \
-\
-	VADDPD__CO1_Y4_Y4; \
-\
-	VMOVUPS__Y4_CO1; \
-\
+	                        \
+	VADDPD__Y4_Y5_Y4;       \
+	VADDPD__Y6_Y7_Y6;       \
+	VADDPD__Y4_Y6_Y4;       \
+	                        \
+	VFMADD213PD_CO1__Y0_Y4; \
+	                        \
+	VMOVUPS__Y4_CO1;        \
+	                        \
 	ADDQ $ 4*SIZE, CO1
 
 // ****************************************************************************************
@@ -846,21 +740,19 @@
 	VXORPD X4, X4, X4
 
 #define KERNEL2x1_SUB \
-	VMOVDDUP__n12_BO__X2; \
-	VMOVUPS__n16_BO__X0; \
-	VFMADD231PD__X0_X2_X4;         \
-	ADDQ        $ 1*SIZE, AO;       \
-	ADDQ        $ 2*SIZE, BO
+	VMOVDDUP__n12_BO__X2;  \
+	VMOVUPS__n16_BO__X0;   \
+	VFMADD231PD__X0_X2_X4; \
+	ADDQ $ 1*SIZE, AO;     \
+	ADDQ $ 2*SIZE, BO
 
 #define SAVE2x1 \
-	VMOVDDUP__ALPHA_X0; \
-\
-	VMULPD__X0_X4_X4; \
-\
-	VADDPD__CO1_X4_X4; \
-\
-	VMOVUPS__X4_CO1; \
-\
+	VMOVDDUP__ALPHA_X0;     \
+	                        \
+	VFMADD213PD_CO1__X0_X4; \
+	                        \
+	VMOVUPS__X4_CO1;        \
+	                        \
 	ADDQ $ 2*SIZE, CO1
 
 // ****************************************************************************************
@@ -870,21 +762,19 @@
 	VXORPD X4, X4, X4
 
 #define KERNEL1x1_SUB \
-	VMOVSD      -12 * SIZE(AO), X1; \
-	VMOVSD      -16 * SIZE(BO), X0; \
-	VFMADD231SD__X0_X1_X4;         \
-	ADDQ        $ 1*SIZE, AO;       \
-	ADDQ        $ 1*SIZE, BO
+	VMOVSD -12 * SIZE(AO), X1; \
+	VMOVSD -16 * SIZE(BO), X0; \
+	VFMADD231SD__X0_X1_X4;     \
+	ADDQ   $ 1*SIZE, AO;       \
+	ADDQ   $ 1*SIZE, BO
 
 #define SAVE1x1 \
-	VMOVSD ALPHA, X0; \
-\
-	VMULSD__X0_X4_X4; \
-\
-	VADDSD__CO1_X4_X4; \
-\
-	VMOVSD X4, (CO1); \
-\
-	ADDQ $ 1*SIZE, CO1
+	VMOVSD ALPHA, X0;       \
+	                        \
+	VFMADD213PD_CO1__X0_X4; \
+	                        \
+	VMOVSD X4, (CO1);       \
+	                        \
+	ADDQ   $ 1*SIZE, CO1
 
 // *****************************************************************************************
